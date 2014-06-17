@@ -9,6 +9,7 @@ package br.edu.ifpb.dac.dao;
 import java.io.Serializable;
 import java.util.Map;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -23,6 +24,6 @@ public interface GenericoDAO<T> {
     public T simpleQuery(String query, Map<Integer, Serializable> map);
     public EntityManager getEntityManager(); 
     public T executeNativeQuery(String query);
-    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map);
-    public T getSingleResultOfNamedQuery(String namedQuery);
+    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException;
+    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException;
 }

@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.gerenciador;
 
+import br.edu.ifpb.dac.beans.Funcionario;
 import br.edu.ifpb.dac.dao.GenericoDAO;
 import br.edu.ifpb.dac.dao.GenericoDAOJPA;
 import java.util.List;
@@ -18,7 +19,8 @@ public class Gerenciador<T> {
 
     private static Gerenciador instance = new Gerenciador();
     private GenericoDAO dao = new GenericoDAOJPA();
-
+    private Funcionario funcionario;
+    
     private Gerenciador() {
     }
 
@@ -54,6 +56,10 @@ public class Gerenciador<T> {
         for (T t : entities) {
             this.dao.save(t);
         }
+    }
+    
+    public void setFuncionarioLogado(Funcionario funcionario){
+        this.funcionario = funcionario;
     }
     
 }
