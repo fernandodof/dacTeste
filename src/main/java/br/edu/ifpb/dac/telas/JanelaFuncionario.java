@@ -5,13 +5,21 @@
  */
 package br.edu.ifpb.dac.telas;
 
-import java.awt.FlowLayout;
+import br.edu.ifpb.dac.gerenciador.Gerenciador;
+import java.awt.Dialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Fernando
  */
 public class JanelaFuncionario extends java.awt.Dialog {
+
+    Gerenciador gerenciador = Gerenciador.getInstance();
+    private Dialog thisDialog;
+    private TrataBotao tb;
 
     /**
      * Creates new form JanelaFuncionario
@@ -21,6 +29,11 @@ public class JanelaFuncionario extends java.awt.Dialog {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
+        this.tb = new TrataBotao();
+        this.btCadastrarClientes.addActionListener(tb);
+        this.btCadastrarFuncionario.addActionListener(tb);
+        lbNomeFuncionario.setText(gerenciador.getFuncionario().getNome());
+        thisDialog = this;
     }
 
     /**
@@ -32,7 +45,16 @@ public class JanelaFuncionario extends java.awt.Dialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        nomeFuncionario = new javax.swing.JLabel();
+        lbNomeFuncionario = new javax.swing.JLabel();
+        panelSecundario = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel2 = new javax.swing.JPanel();
+        btCadastrarClientes = new javax.swing.JButton();
+        btCadastrarFuncionario = new javax.swing.JButton();
+        btCadastrarFornecedor = new javax.swing.JButton();
+        btRealizarVenda = new javax.swing.JButton();
+        brCadastrarProduto = new javax.swing.JButton();
+        btCadastrarMaterial = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -43,9 +65,68 @@ public class JanelaFuncionario extends java.awt.Dialog {
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 800));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nomeFuncionario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        nomeFuncionario.setText("jLabel1");
-        jPanel1.add(nomeFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 650, 30));
+        lbNomeFuncionario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbNomeFuncionario.setText("Nome do Funcionário");
+        jPanel1.add(lbNomeFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 650, 30));
+
+        panelSecundario.setMinimumSize(new java.awt.Dimension(600, 750));
+        jPanel1.add(panelSecundario, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 620, 740));
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 10, 720));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btCadastrarClientes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btCadastrarClientes.setText("Cadastrar Clientes");
+        btCadastrarClientes.setToolTipText("Cadastrar novos clientes no sistema");
+        btCadastrarClientes.setMaximumSize(new java.awt.Dimension(250, 31));
+        btCadastrarClientes.setMinimumSize(new java.awt.Dimension(230, 31));
+        jPanel2.add(btCadastrarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, -1));
+
+        btCadastrarFuncionario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btCadastrarFuncionario.setText("Cadastrar Funcionário");
+        btCadastrarFuncionario.setMaximumSize(new java.awt.Dimension(250, 31));
+        btCadastrarFuncionario.setMinimumSize(new java.awt.Dimension(250, 31));
+        btCadastrarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastrarFuncionarioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btCadastrarFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 210, -1));
+
+        btCadastrarFornecedor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btCadastrarFornecedor.setText("Cadastrar Fornecedor");
+        jPanel2.add(btCadastrarFornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 210, -1));
+
+        btRealizarVenda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btRealizarVenda.setText("Realizar Venda");
+        btRealizarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRealizarVendaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btRealizarVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 210, -1));
+
+        brCadastrarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        brCadastrarProduto.setText("Cadastrar Produto");
+        brCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brCadastrarProdutoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(brCadastrarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 210, -1));
+
+        btCadastrarMaterial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btCadastrarMaterial.setText("Cadastrar Material");
+        btCadastrarMaterial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastrarMaterialActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btCadastrarMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 210, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 290, 720));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -60,8 +141,59 @@ public class JanelaFuncionario extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void btCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCadastrarFuncionarioActionPerformed
+
+    private void btRealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRealizarVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btRealizarVendaActionPerformed
+
+    private void brCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brCadastrarProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brCadastrarProdutoActionPerformed
+
+    private void btCadastrarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarMaterialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCadastrarMaterialActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton brCadastrarProduto;
+    private javax.swing.JButton btCadastrarClientes;
+    private javax.swing.JButton btCadastrarFornecedor;
+    private javax.swing.JButton btCadastrarFuncionario;
+    private javax.swing.JButton btCadastrarMaterial;
+    private javax.swing.JButton btRealizarVenda;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel nomeFuncionario;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbNomeFuncionario;
+    private javax.swing.JPanel panelSecundario;
     // End of variables declaration//GEN-END:variables
+
+    private class TrataBotao implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(btCadastrarClientes)) {
+                JPanel jPanel = new PanelCadastrarClientes();
+                this.chamarNovoPainel(jPanel);
+//                new JanelaCadastrarClientes(null, true).setVisible(true);
+            } else if (e.getSource().equals(btCadastrarFuncionario)) {
+                JPanel jPanel = new PanelCadastrarFuncionario();
+                this.chamarNovoPainel(jPanel);
+                
+            }
+        }
+
+        private void chamarNovoPainel(JPanel jPanel) {
+            panelSecundario.removeAll();
+            jPanel.setVisible(true);
+            panelSecundario.add(jPanel);
+            panelSecundario.revalidate();
+            panelSecundario.validate();
+        }
+
+    }
+
 }

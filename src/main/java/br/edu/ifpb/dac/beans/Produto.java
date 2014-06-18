@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.beans;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -40,7 +42,10 @@ public class Produto implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Fornecedor fornecedor;
     private String marca;
-
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    private byte[] imagem;
+    
     public Produto() {
     }
 
@@ -124,6 +129,14 @@ public class Produto implements Serializable {
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
     
     public void addMeterial(Material material){

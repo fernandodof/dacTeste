@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Fernando
  */
 public class JanelaInicial extends javax.swing.JFrame {
-
+    private Gerenciador gerenciador = Gerenciador.getInstance();
     private TrataBotao tb;
 
     /**
@@ -47,6 +47,7 @@ public class JanelaInicial extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btOk = new javax.swing.JButton();
         senha = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,41 +74,48 @@ public class JanelaInicial extends javax.swing.JFrame {
 
         senha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel3.setText("Not Netshoes");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btOk)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(login)
-                            .addComponent(senha, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))))
+                        .addGap(145, 145, 145)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btOk)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(jLabel3)))
                 .addContainerGap(180, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(161, 161, 161)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel3)
+                .addGap(157, 157, 157)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(senha)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(senha)
-                        .addGap(18, 18, 18)
-                        .addComponent(btOk)
-                        .addGap(260, 260, 260))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(btOk)
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         pack();
@@ -160,12 +168,11 @@ public class JanelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField login;
     private javax.swing.JPasswordField senha;
     // End of variables declaration//GEN-END:variables
     private class TrataBotao implements ActionListener {
-
-        Gerenciador gerenciador = Gerenciador.getInstance();
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -175,7 +182,7 @@ public class JanelaInicial extends javax.swing.JFrame {
                 loginParms.put("senha", new String(senha.getPassword()));
                 try {
                     Funcionario funcionario = (Funcionario) gerenciador.getSingleResultOfNamedQuery("Funcionario.login", loginParms);
-                    gerenciador.setFuncionarioLogado(funcionario);
+                    gerenciador.setFuncionario(funcionario);
                     new JanelaFuncionario(null, true).setVisible(true);
                 } catch (NoResultException ex) {
                     JOptionPane.showMessageDialog(null, "Login ou senha não conferem");

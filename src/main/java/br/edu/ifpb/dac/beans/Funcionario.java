@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
@@ -23,7 +24,7 @@ import javax.persistence.OneToMany;
 @NamedQueries({
     @NamedQuery(name="Funcionario.login", query = "SELECT f FROM Funcionario f WHERE f.login = :login AND f.senha = :senha")})
 public class Funcionario extends Pessoa implements Serializable {
-
+    @Column(unique = true)
     private String login;
     private String senha;
     private double slaraio;

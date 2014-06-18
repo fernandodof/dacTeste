@@ -30,7 +30,6 @@ public abstract class Pessoa {
     private Long id;
     @Column(unique = true)
     private String cpf;
-    @Column(unique = true)
     private String nome;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;

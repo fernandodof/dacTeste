@@ -5,9 +5,11 @@
  */
 package br.edu.ifpb.dac.gerenciador;
 
+import br.edu.ifpb.dac.beans.Cliente;
 import br.edu.ifpb.dac.beans.Funcionario;
 import br.edu.ifpb.dac.dao.GenericoDAO;
 import br.edu.ifpb.dac.dao.GenericoDAOJPA;
+import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +22,7 @@ public class Gerenciador<T> {
     private static Gerenciador instance = new Gerenciador();
     private GenericoDAO dao = new GenericoDAOJPA();
     private Funcionario funcionario;
-    
+
     private Gerenciador() {
     }
 
@@ -57,9 +59,34 @@ public class Gerenciador<T> {
             this.dao.save(t);
         }
     }
-    
-    public void setFuncionarioLogado(Funcionario funcionario){
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
     }
-    
+
+//    public boolean cadastrarCliente(Cliente cliente) throws ErroAconteceuException {
+//        if (cliente.getNome() == null || cliente.getNome().isEmpty()) {
+//            throw new ErroAconteceuException("Por favor, informe o nome do cliente");
+//        } else if (cliente.getEmail() == null || cliente.getEmail().isEmpty()) {
+//            throw new ErroAconteceuException("Por favor, informe o email do cliente");
+//        } else if (cliente.getCpf().trim().length() < 12) {
+//            throw new ErroAconteceuException("Por favor, informe o CPF do cliente");
+//        } else if (cliente.getEndereco().getRua() == null || cliente.getEndereco().getRua().isEmpty()) {
+//            throw new ErroAconteceuException("Por favor, informe a Rua do cliente");
+//        } else if (cliente.getEndereco().getBairro() == null || cliente.getEndereco().getBairro().isEmpty()) {
+//            throw new ErroAconteceuException("Por favor, informe o Bairro do cliente");
+//        } else if (cliente.getEndereco().getNumero() < 0) {
+//            throw new ErroAconteceuException("Por favor, informe um Número válido para o endereço do cliente");
+//        } else if (cliente.getEndereco().getCidade() == null || cliente.getEndereco().getCidade().isEmpty()) {
+//            throw new ErroAconteceuException("Por favor, informe a Cidade do cliente");
+//        } else if (cliente.getEndereco().getCep().length() < 9) {
+//            throw new ErroAconteceuException("Por favor, informe um CEP válido para o cliente");
+//        }
+//        return this.save((T) cliente);
+//    }
+
 }

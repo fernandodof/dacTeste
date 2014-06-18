@@ -39,7 +39,6 @@ public class Cliente extends Pessoa implements Serializable {
     public Cliente(String cpf, String nome, String email, Sexo sexo) {
         super(cpf, nome, sexo);
         this.email = email;
-        this.situacao = Situacao.Normal;
         this.compras = new ArrayList();
     }
     
@@ -53,6 +52,22 @@ public class Cliente extends Pessoa implements Serializable {
     
     public void addCompra(Venda compra){
         this.compras.add(compra);
+    }
+
+    public Situacao getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(Situacao situacao) {
+        this.situacao = situacao;
+    }
+
+    public List<Venda> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Venda> compras) {
+        this.compras = compras;
     }
     
 }
