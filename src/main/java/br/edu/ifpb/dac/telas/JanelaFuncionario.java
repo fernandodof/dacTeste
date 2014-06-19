@@ -32,6 +32,8 @@ public class JanelaFuncionario extends java.awt.Dialog {
         this.tb = new TrataBotao();
         this.btCadastrarClientes.addActionListener(tb);
         this.btCadastrarFuncionario.addActionListener(tb);
+        this.btCadastrarFornecedor.addActionListener(tb);
+        this.btCadastrarMaterial.addActionListener(tb);
         lbNomeFuncionario.setText(gerenciador.getFuncionario().getNome());
         thisDialog = this;
     }
@@ -115,7 +117,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 brCadastrarProdutoActionPerformed(evt);
             }
         });
-        jPanel2.add(brCadastrarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 210, -1));
+        jPanel2.add(brCadastrarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 210, -1));
 
         btCadastrarMaterial.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btCadastrarMaterial.setText("Cadastrar Material");
@@ -124,7 +126,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 btCadastrarMaterialActionPerformed(evt);
             }
         });
-        jPanel2.add(btCadastrarMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 210, -1));
+        jPanel2.add(btCadastrarMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 210, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 290, 720));
 
@@ -176,14 +178,15 @@ public class JanelaFuncionario extends java.awt.Dialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btCadastrarClientes)) {
-                JPanel jPanel = new PanelCadastrarClientes();
-                this.chamarNovoPainel(jPanel);
-//                new JanelaCadastrarClientes(null, true).setVisible(true);
+                this.chamarNovoPainel(new PanelCadastrarClientes());
             } else if (e.getSource().equals(btCadastrarFuncionario)) {
-                JPanel jPanel = new PanelCadastrarFuncionario();
-                this.chamarNovoPainel(jPanel);
-                
+                this.chamarNovoPainel(new PanelCadastrarFuncionario());
+            } else if(e.getSource().equals(btCadastrarFornecedor)){
+                this.chamarNovoPainel(new PanelCadastrarFornecedor());
+            }else if(e.getSource().equals(btCadastrarMaterial)){
+                this.chamarNovoPainel(new PanelCadastrarMaterial());
             }
+            
         }
 
         private void chamarNovoPainel(JPanel jPanel) {

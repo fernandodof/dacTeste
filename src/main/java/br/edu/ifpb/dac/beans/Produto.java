@@ -7,6 +7,7 @@
 package br.edu.ifpb.dac.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -38,7 +39,7 @@ public class Produto implements Serializable {
     private int tamanho;
     private double valor;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Material> materiais;
+    private List<Material> materiais = new ArrayList();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Fornecedor fornecedor;
     private String marca;
