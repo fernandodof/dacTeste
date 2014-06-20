@@ -7,6 +7,7 @@
 package br.edu.ifpb.dac.dao;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -14,6 +15,7 @@ import javax.persistence.NoResultException;
 /**
  *
  * @author Fernando
+ * @param <T>
  */
 public interface GenericoDAO<T> {
     public boolean save (T entity);
@@ -26,4 +28,6 @@ public interface GenericoDAO<T> {
     public T executeNativeQuery(String query);
     public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException;
     public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException;
+    public List<T> getListResultOfNamedQuery(String namedQuery) throws NoResultException;
+    public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException;
 }

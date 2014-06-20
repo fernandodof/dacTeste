@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -20,6 +22,8 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 @SequenceGenerator(name = "seq_fornecedor", sequenceName = "sequencia_fornecedor", allocationSize = 1, initialValue = 1)
+@NamedQueries({
+    @NamedQuery(name="Fornecedor.findAll", query = "SELECT f FROM Fornecedor f")})
 public class Fornecedor implements Serializable {
     @Id
     @GeneratedValue(generator = "seq_fornecedor", strategy = GenerationType.SEQUENCE)
@@ -59,5 +63,11 @@ public class Fornecedor implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
     
 }

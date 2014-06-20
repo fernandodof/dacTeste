@@ -34,6 +34,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         this.btCadastrarFuncionario.addActionListener(tb);
         this.btCadastrarFornecedor.addActionListener(tb);
         this.btCadastrarMaterial.addActionListener(tb);
+        this.brCadastrarProduto.addActionListener(tb);
         lbNomeFuncionario.setText(gerenciador.getFuncionario().getNome());
         thisDialog = this;
     }
@@ -185,6 +186,8 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 this.chamarNovoPainel(new PanelCadastrarFornecedor());
             }else if(e.getSource().equals(btCadastrarMaterial)){
                 this.chamarNovoPainel(new PanelCadastrarMaterial());
+            }else if(e.getSource().equals(brCadastrarProduto)){
+                this.chamarNovoPainel(new PanelCadastrarProduto());
             }
             
         }

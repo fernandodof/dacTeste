@@ -10,17 +10,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
+import static java.net.URLConnection.guessContentTypeFromName;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.MimetypesFileTypeMap;
 
 /**
  *
  * @author Fernando
  */
-public class Executor {
+public class CarregaArquivo {
 
     public static byte[] carregaArquivo(String nomeArquivo) {
         try {
-            URL url = Executor.class.getResource(nomeArquivo);
-            File arquivo = new File(url.toURI());
+            File arquivo = new File(nomeArquivo);
             byte[] ramFoto = new byte[(int) arquivo.length()];
             try (FileInputStream fis = new FileInputStream(arquivo)) {
                 byte[] buffer = new byte[1024 * 4];
@@ -32,9 +38,18 @@ public class Executor {
                 }
             }
             return ramFoto;
-        } catch (URISyntaxException | IOException e) {
+        } catch (IOException e) {
             return null;
         }
     }
-    
+
+    public static boolean arquivoAceitavel(String caminhoArquivo) {
+        List<String> tipos = Arrays.asList("image/jpeg", "image/pjpeg", "image/png", "image/bmp",
+                "image/x-windows-bmp", "image/gif");
+        File arquivo = new File(caminhoArquivo);
+        String tipo = URLConnection.guessContentTypeFromName(arquivo.getName());
+        System.out.println("Tipo: "+tipo);
+        return tipos.contains(tipo);
+    }
+
 }

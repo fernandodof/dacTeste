@@ -110,7 +110,7 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
     }
 
     @Override
-    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException{
+    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
         Query query = this.em.createNamedQuery(namedQuery);
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             String param = entry.getKey();
@@ -121,7 +121,7 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
     }
 
     @Override
-    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException{
+    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException {
 
         Query query = this.em.createNamedQuery(namedQuery);
         if (query.getResultList().isEmpty()) {
@@ -129,6 +129,27 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
         } else {
             return (T) query.getResultList().get(0);
         }
+    }
+
+    @Override
+    public List<T> getListResultOfNamedQuery(String namedQuery) throws NoResultException {
+        Query query = this.em.createNamedQuery(namedQuery);
+        if (query.getResultList().isEmpty()) {
+            throw new NoResultException();
+        } else {
+            return query.getResultList();
+        }
+    }
+
+    @Override
+    public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
+        Query query = this.em.createNamedQuery(namedQuery);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String param = entry.getKey();
+            Object value = entry.getValue();
+            query.setParameter(param, value);
+        }
+        return query.getResultList();
     }
 
 }

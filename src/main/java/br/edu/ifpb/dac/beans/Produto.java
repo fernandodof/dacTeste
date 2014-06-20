@@ -38,7 +38,7 @@ public class Produto implements Serializable {
     private String descricao;
     private int tamanho;
     private double valor;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Material> materiais = new ArrayList();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Fornecedor fornecedor;
@@ -144,4 +144,8 @@ public class Produto implements Serializable {
         this.materiais.add(material);
     }
     
+    public void addMateriais(List<Material> materiais){
+        this.materiais.addAll(materiais);
+    }
+   
 }

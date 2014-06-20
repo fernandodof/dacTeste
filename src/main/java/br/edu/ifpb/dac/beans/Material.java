@@ -6,10 +6,13 @@
 package br.edu.ifpb.dac.beans;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -18,11 +21,14 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 @SequenceGenerator(name = "seq_material", sequenceName = "sequencia_meterial", allocationSize = 1, initialValue = 1)
+@NamedQueries({
+    @NamedQuery(name="Material.findAll", query = "SELECT m FROM Material m")})
 public class Material implements Serializable {
 
     @Id
     @GeneratedValue(generator = "seq_material", strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(unique = true)
     private String descricao;
 
     public Material() {
@@ -47,5 +53,13 @@ public class Material implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return descricao;
+    }
+    
+    
+    
 
 }

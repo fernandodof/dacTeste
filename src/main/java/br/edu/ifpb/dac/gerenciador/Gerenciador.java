@@ -12,6 +12,7 @@ import br.edu.ifpb.dac.dao.GenericoDAOJPA;
 import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -46,12 +47,20 @@ public class Gerenciador<T> {
         return (T) this.dao.getById(classe, id);
     }
 
-    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) {
+    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException{
         return (T) this.dao.getSingleResultOfNamedQuery(namedQuery, map);
     }
 
-    public T getSingleResultOfNamedQuery(String namedQuery) {
+    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException{
         return (T) this.dao.getSingleResultOfNamedQuery(namedQuery);
+    }
+
+    public List<T> getListResultOfNamedQuery(String namedQuery) throws NoResultException {
+        return this.dao.getListResultOfNamedQuery(namedQuery);
+    }
+
+    public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
+        return this.dao.getListResultOfNamedQuery(namedQuery, map);
     }
 
     public void saveEntityList(List<T> entities) {
@@ -88,5 +97,4 @@ public class Gerenciador<T> {
 //        }
 //        return this.save((T) cliente);
 //    }
-
 }

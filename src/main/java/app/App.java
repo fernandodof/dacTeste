@@ -118,7 +118,7 @@ public class App {
         Produto produto16 = new Produto("N-008", 4, "Tênis Nike Dart 10 MSL", 44, 139.90, fornecedor2, "Nike");
         produto16.addMeterial(material1);
         produto16.addMeterial(material4);
-
+        
         genericoDAO.save(produto1);
         genericoDAO.save(produto2);
         genericoDAO.save(produto3);
