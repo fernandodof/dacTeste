@@ -38,6 +38,10 @@ public class Gerenciador<T> {
     public boolean update(T entity) {
         return this.dao.update(entity);
     }
+    
+    public boolean delete(T entity){
+        return this.dao.delete(entity);
+    }
 
     public T find(Class<T> classe, T entity) {
         return (T) this.dao.find(classe, entity);

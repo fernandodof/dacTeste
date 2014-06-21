@@ -59,11 +59,11 @@ public class PanelCadastrarProduto extends javax.swing.JPanel {
             this.defaultListMateriais.addElement(material);
         }
         this.listMaterial.setModel(defaultListMateriais);
-        
+
         for (Fornecedor fornecedor : fornecedores) {
             this.comboBoxFornecedores.addItem(fornecedor);
         }
-        
+
         parent = (JDialog) this.getParent();
         components = Arrays.asList(painelMaior.getComponents());
         for (Component component : components) {
@@ -393,7 +393,7 @@ public class PanelCadastrarProduto extends javax.swing.JPanel {
                     List<Material> materiaisSelecionandos = (List<Material>) listMaterial.getSelectedValuesList();
                     produto.setFornecedor((Fornecedor) comboBoxFornecedores.getSelectedItem());
                     produto.addMateriais(materiaisSelecionandos);
-                    
+
                     //Salvando produto
                     if (gerenciador.save(produto)) {
                         JOptionPane jOptionPane = new JOptionPane("Produto cadastrado com sucesso");
@@ -421,13 +421,6 @@ public class PanelCadastrarProduto extends javax.swing.JPanel {
 
         }
 
-//        public boolean arquivoAceitavel(File f) {
-//            List<String> places = Arrays.asList("image/jpeg", "image/pjpeg", "image/png", "image/bmp",
-//                    "image/x-windows-bmp", "image/gif");
-//
-//            String tipo = new MimetypesFileTypeMap().getContentType(f);
-//            return places.contains(tipo);
-//        }
         private boolean verificaNumeros(String numero) {
             Pattern pattern = Pattern.compile("^\\d+$");
             Matcher matcher = pattern.matcher(numero);

@@ -179,7 +179,7 @@ public class PanelCadastrarClientes extends javax.swing.JPanel {
         fieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         try {
-            fieldCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########-##")));
+            fieldCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -224,7 +224,7 @@ public class PanelCadastrarClientes extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(fieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMaiorLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -377,7 +377,7 @@ public class PanelCadastrarClientes extends javax.swing.JPanel {
                         throw new ErroAconteceuException("Por favor, informe o nome do cliente");
                     } else if ( fieldEmail.getText() == null || fieldEmail.getText().isEmpty()) {
                         throw new ErroAconteceuException("Por favor, informe o email do cliente");
-                    } else if (fieldCpf.getText().trim().length() < 12) {
+                    } else if (fieldCpf.getText().trim().length() < 14) {
                         throw new ErroAconteceuException("Por favor, informe o CPF do cliente");
                     } else if (!radioMasculino.isSelected() && !radioFeminino.isSelected() && !radioOutro.isSelected()) {
                         throw new ErroAconteceuException("Por favor, Selecione o Sexo do cliente");

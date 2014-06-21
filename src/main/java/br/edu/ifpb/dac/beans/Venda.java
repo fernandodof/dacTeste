@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.ifpb.dac.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 @Entity
 @SequenceGenerator(name = "seq_venda", sequenceName = "sequencia_venda", allocationSize = 1, initialValue = 1)
 public class Venda implements Serializable {
+
     @Id
     @GeneratedValue(generator = "seq_venda", strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -75,10 +76,23 @@ public class Venda implements Serializable {
     public void setItensVenda(List<ItemVenda> itensVenda) {
         this.itensVenda = itensVenda;
     }
-    
-    public void addItemVenda(ItemVenda itemVenda){
+
+    public void addItemVenda(ItemVenda itemVenda) {
         this.valor += itemVenda.getValor();
         this.itensVenda.add(itemVenda);
     }
-    
+
+    public boolean removeIntemVenda(Long idProduto) {
+        for (ItemVenda itemVenda : itensVenda) {
+            if (Objects.equals(itemVenda.getId().getIdProduto(), idProduto)) {
+                this.itensVenda.remove(itemVenda);
+                this.valor -= itemVenda.getValor();
+                return true;
+            }
+        }
+        if (itensVenda.isEmpty()) {
+            this.valor = 0.0;
+        }
+        return false;
+    }
 }

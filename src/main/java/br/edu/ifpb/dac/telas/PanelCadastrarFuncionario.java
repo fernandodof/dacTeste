@@ -71,7 +71,6 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
         radioFeminino = new javax.swing.JRadioButton();
         radioOutro = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        fieldCpf = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -94,6 +93,7 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
         fieldCep = new javax.swing.JFormattedTextField();
         fieldRua = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        fieldCpf = new javax.swing.JFormattedTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -146,13 +146,6 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 255));
         jLabel6.setText("Informações do novo funcionário");
-
-        try {
-            fieldCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fieldCpf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Salário R$");
@@ -217,6 +210,13 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
             }
         });
 
+        try {
+            fieldCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldCpf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout painelMaiorLayout = new javax.swing.GroupLayout(painelMaior);
         painelMaior.setLayout(painelMaiorLayout);
         painelMaiorLayout.setHorizontalGroup(
@@ -259,7 +259,7 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
                             .addGroup(painelMaiorLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(fieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(fieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(painelMaiorLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -430,7 +430,7 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
                 try {
                     if (fieldNome.getText() == null || fieldNome.getText().isEmpty()) {
                         throw new ErroAconteceuException("Por favor, informe o nome do funcionário");
-                    } else if (fieldCpf.getText().trim().length() < 12) {
+                    } else if (fieldCpf.getText().trim().length() < 14) {
                         throw new ErroAconteceuException("Por favor, informe o CPF do funcionário");
                     } else if (!radioMasculino.isSelected() && !radioFeminino.isSelected() && !radioOutro.isSelected()) {
                         throw new ErroAconteceuException("Por favor, Selecione o Sexo do funcionário");

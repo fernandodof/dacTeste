@@ -93,7 +93,7 @@ public class PanelCadastrarMaterial extends javax.swing.JPanel {
                     .addGroup(painelMaiorLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel2)
-                        .addContainerGap(495, Short.MAX_VALUE))
+                        .addContainerGap(485, Short.MAX_VALUE))
                     .addGroup(painelMaiorLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fieldDescricao))))
@@ -112,10 +112,10 @@ public class PanelCadastrarMaterial extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(btCadastrar)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(592, Short.MAX_VALUE))
         );
 
-        add(painelMaior, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 60, 600, -1));
+        add(painelMaior, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 60, 590, 690));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 204));

@@ -137,23 +137,23 @@ public class App {
         genericoDAO.save(produto16);
 
         //Criando venda        
-        Venda venda1 = new Venda(new Date());
-        genericoDAO.save(venda1);
-        //Criando item venda
-        ItemVenda itemVenda1 = new ItemVenda(venda1.getId(), 1, produto3);
-        genericoDAO.save(itemVenda1);
-
-        //Associando item e venda
-        venda1.addItemVenda(itemVenda1);
-        genericoDAO.update(venda1);
-
-        //Associando funcionario e venda
-        funcionario1.addVenda(venda1);
-        genericoDAO.update(funcionario1);
-
-        //Associando cliente e venda;
-        cliente1.addCompra(venda1);
-        genericoDAO.update(venda1);
+//        Venda venda1 = new Venda(new Date());
+//        genericoDAO.save(venda1);
+//        //Criando item venda
+//        ItemVenda itemVenda1 = new ItemVenda(venda1.getId(),produto3.getId(), produto3.getValor(), 1);
+//        genericoDAO.save(itemVenda1);
+//
+//        //Associando item e venda
+//        venda1.addItemVenda(itemVenda1);
+//        genericoDAO.update(venda1);
+//
+//        //Associando funcionario e venda
+//        funcionario1.addVenda(venda1);
+//        genericoDAO.update(funcionario1);
+//
+//        //Associando cliente e venda;
+//        cliente1.addCompra(venda1);
+//        genericoDAO.update(venda1);
 
     }
 }

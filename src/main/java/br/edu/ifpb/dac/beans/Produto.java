@@ -19,6 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -28,6 +30,9 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 @SequenceGenerator(name = "seq_produto", sequenceName = "sequencia_produto", allocationSize = 1, initialValue = 1)
+@NamedQueries({
+    @NamedQuery(name="Produto.findByCodigo", query = "SELECT p FROM Produto p WHERE p.codigo=:codigo"),
+    @NamedQuery(name = "Produto.findbyDescricao", query = "SELECT p FROM Produto p WHERE p.descricao=:descricao")})
 public class Produto implements Serializable {
     @Id
     @GeneratedValue(generator = "seq_produto", strategy = GenerationType.SEQUENCE)

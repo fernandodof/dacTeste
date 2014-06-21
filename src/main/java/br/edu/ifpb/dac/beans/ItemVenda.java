@@ -25,11 +25,11 @@ public class ItemVenda implements Serializable {
     public ItemVenda() {
     }
 
-    public ItemVenda(Long idVenda, int quantidade, Produto produto) {
-        this.id = new ItemVendaPK(produto.getId(), idVenda);
+    public ItemVenda(Long idVenda, Long idProduto, double valorUnitario, int quantidade) {
+        this.id = new ItemVendaPK(idProduto, idVenda);
         this.quantidade = quantidade;
-        produto.setQuantidade(produto.getQuantidade() - quantidade);
-        this.valor = produto.getValor() * quantidade;
+//        produto.setQuantidade(produto.getQuantidade() - quantidade);
+        this.valor = valorUnitario * quantidade;
     }
 
     public ItemVendaPK getId() {

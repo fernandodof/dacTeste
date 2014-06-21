@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -20,6 +22,8 @@ import javax.persistence.OneToMany;
  * @author Fernando
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Cliente.findByCPF", query = "SELECT c FROM Cliente c WHERE c.cpf = :cpf")})
 public class Cliente extends Pessoa implements Serializable {
 
     private String email;
