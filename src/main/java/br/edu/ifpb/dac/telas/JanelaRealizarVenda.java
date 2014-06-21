@@ -432,7 +432,7 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
             if (e.getSource().equals(btBuscar)) {
                 try {
                     if (fieldCpf.getText() == null || fieldCpf.getText().trim().length() < 12) {
-                        throw new ErroAconteceuException("Por favor informe um cpf válido");
+                        throw new ErroAconteceuException("Por favor informe um CPF válido");
                     }
                     Map<String, String> parametros = new HashMap();
                     parametros.put("cpf", fieldCpf.getText());

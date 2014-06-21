@@ -205,7 +205,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
             } else if (e.getSource().equals(btCadastrarMaterial)) {
                 this.chamarNovoPainel(new PanelCadastrarMaterial());
             } else if (e.getSource().equals(btBuscarCliente)) {
-                this.chamarNovoPainel(new PanelCadastrarProduto());
+                this.chamarNovoPainel(new PainelBuscarCliente());
             } else if (e.getSource().equals(btRealizarVenda)) {
                 new JanelaRealizarVenda(null, true).setVisible(true);
             }else if (e.getSource().equals(btCadastrarProduto)){
