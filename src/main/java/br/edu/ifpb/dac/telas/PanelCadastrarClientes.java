@@ -369,7 +369,6 @@ public class PanelCadastrarClientes extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btCadastrar)) {
                 try {
-                    
                     if (fieldNome.getText() == null || fieldNome.getText().isEmpty()) {
                         throw new ErroAconteceuException("Por favor, informe o nome do cliente");
                     } else if ( fieldEmail.getText() == null || fieldEmail.getText().isEmpty()) {
