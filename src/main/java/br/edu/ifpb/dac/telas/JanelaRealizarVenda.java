@@ -358,7 +358,7 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
         lbNumeroVenda.setForeground(new java.awt.Color(0, 153, 153));
         lbNumeroVenda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbNumeroVenda.setToolTipText("");
-        jPanel1.add(lbNumeroVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 220, 30));
+        jPanel1.add(lbNumeroVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 220, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 

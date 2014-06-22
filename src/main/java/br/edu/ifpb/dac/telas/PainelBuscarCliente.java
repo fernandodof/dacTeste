@@ -14,12 +14,14 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.NoResultException;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -431,8 +433,8 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                if (e.getSource().equals(btBuscarCliente)) {
+            if (e.getSource().equals(btBuscarCliente)) {
+                try {
                     if (fieldCpf.getText().length() < 14) {
                         throw new ErroAconteceuException("Por favor, Informe um CPF válido");
                     }
@@ -471,100 +473,99 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
                     radioMasculino.setEnabled(false);
                     radioOutro.setEnabled(false);
                     btSalvar.setEnabled(false);
-
-                } else if (e.getSource().equals(btEditarCliente)) {
-                    for (JTextField jTextField : textFields) {
-                        jTextField.setEditable(true);
-                        jTextField.setBackground(Color.WHITE);
-                    }
-                    cbSituacao.setEnabled(true);
-                    radioFeminino.setEnabled(true);
-                    radioMasculino.setEnabled(true);
-                    radioOutro.setEnabled(true);
-                    btSalvar.setEnabled(true);
-                } else if (e.getSource().equals(btSalvar)) {
-                    try {
-                        if (fieldNome.getText() == null || fieldNome.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe o nome do cliente");
-                        } else if (fieldEmail.getText() == null || fieldEmail.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe o email do cliente");
-                        } else if (fieldCpf.getText().trim().length() < 14) {
-                            throw new ErroAconteceuException("Por favor, informe o CPF do cliente");
-                        } else if (!radioMasculino.isSelected() && !radioFeminino.isSelected() && !radioOutro.isSelected()) {
-                            throw new ErroAconteceuException("Por favor, Selecione o Sexo do cliente");
-                        } else if (fieldRua.getText() == null || fieldRua.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe a Rua do cliente");
-                        } else if (fieldBairro.getText() == null || fieldBairro.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe o Bairro do cliente");
-                        } else if (fieldNumero.getText() == null | fieldNumero.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe o Número do endereço do cliente");
-                        } else if (fieldCidade.getText() == null || fieldCidade.getText().isEmpty()) {
-                            throw new ErroAconteceuException("Por favor, informe a Cidade do cliente");
-                        } else if (fieldCep.getText().trim().length() < 9) {
-                            throw new ErroAconteceuException("Por favor, informe o Cep do cliente");
-                        }
-
-                        //Iformando atributos para endereço do cliente e informando atributos
-                        Endereco endereco = cliente.getEndereco();
-                        endereco.setRua(fieldRua.getText());
-                        endereco.setBairro(fieldBairro.getText());
-                        endereco.setNumero(Integer.parseInt(fieldNumero.getText()));
-                        endereco.setCidade(fieldCidade.getText());
-                        endereco.setCep(fieldCep.getText());
-
-                        //Alterando o endereço do cliente
-                        cliente.setEndereco(endereco);
-                        cliente.setNome(fieldNome.getText());
-                        cliente.setEmail(fieldEmail.getText());
-                        cliente.setCpf(fieldCpf.getText());
-                        cliente.setSituacao(Cliente.Situacao.Normal);
-
-                        //Verificando botão de rádio para o cliente
-                        Pessoa.Sexo sexo;
-                        if (radioMasculino.isSelected()) {
-                            sexo = Pessoa.Sexo.Masculino;
-                        } else if (radioFeminino.isSelected()) {
-                            sexo = Pessoa.Sexo.Feminino;
-                        } else if (radioOutro.isSelected()) {
-                            sexo = Pessoa.Sexo.Outro;
-                        } else {
-                            throw new ErroAconteceuException("Por favor, Selecione o Sexo do cliente");
-                        }
-                        //Definido botao escolhido
-                        cliente.setSexo(sexo);
-                        //Salvando cliente
-                        if (gerenciador.update(cliente)) {
-                            JOptionPane jOptionPane = new JOptionPane("Cliente atualizado com sucesso");
-                            parent = jOptionPane.createDialog("Sucesso");
-                            parent.setVisible(true);
-                            for (JTextField jTextField : textFields) {
-                                jTextField.setText("");
-                            }
-                            painelFormulario.setVisible(false);
-                            fieldCpf.setText("");
-                        } else {
-                            JOptionPane jOptionPane = new JOptionPane("Novo cliente não pode ser atualizado");
-                            parent = jOptionPane.createDialog("Erro");
-                            parent.setVisible(true);
-                        }
-                    } catch (NumberFormatException ex) {
-                        JOptionPane jOptionPane = new JOptionPane("Informe apenas algarismos para o campo número", JOptionPane.WARNING_MESSAGE);
-                        parent = jOptionPane.createDialog("Erro");
-                        parent.setVisible(true);
-                    } catch (ErroAconteceuException ex) {
-                        JOptionPane jOptionPane = new JOptionPane(ex.getMessage(), JOptionPane.WARNING_MESSAGE);
-                        parent = jOptionPane.createDialog("Erro");
-                        parent.setVisible(true);
-                    } catch (Exception ex) {
-                        JOptionPane jOptionPane = new JOptionPane("Cliente não pode ser atualizado");
-                        parent = jOptionPane.createDialog("Erro");
-                        parent.setVisible(true);
-                    }
+                } catch (ErroAconteceuException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (NoResultException ex) {
+                    JOptionPane.showMessageDialog(null, "Cliente com cpf informado não encontrado");
                 }
-            } catch (ErroAconteceuException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-            } catch (NoResultException ex) {
-                JOptionPane.showMessageDialog(null, "Cliente com cpf informado não encontrado");
+            } else if (e.getSource().equals(btEditarCliente)) {
+                for (JTextField jTextField : textFields) {
+                    jTextField.setEditable(true);
+                    jTextField.setBackground(Color.WHITE);
+                }
+                cbSituacao.setEnabled(true);
+                radioFeminino.setEnabled(true);
+                radioMasculino.setEnabled(true);
+                radioOutro.setEnabled(true);
+                btSalvar.setEnabled(true);
+            } else if (e.getSource().equals(btSalvar)) {
+                try {
+                    if (fieldNome.getText() == null || fieldNome.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe o nome do cliente");
+                    } else if (fieldEmail.getText() == null || fieldEmail.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe o email do cliente");
+                    } else if (fieldCpf.getText().trim().length() < 14) {
+                        throw new ErroAconteceuException("Por favor, informe o CPF do cliente");
+                    } else if (!radioMasculino.isSelected() && !radioFeminino.isSelected() && !radioOutro.isSelected()) {
+                        throw new ErroAconteceuException("Por favor, Selecione o Sexo do cliente");
+                    } else if (fieldRua.getText() == null || fieldRua.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe a Rua do cliente");
+                    } else if (fieldBairro.getText() == null || fieldBairro.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe o Bairro do cliente");
+                    } else if (fieldNumero.getText() == null | fieldNumero.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe o Número do endereço do cliente");
+                    } else if (fieldCidade.getText() == null || fieldCidade.getText().isEmpty()) {
+                        throw new ErroAconteceuException("Por favor, informe a Cidade do cliente");
+                    } else if (fieldCep.getText().trim().length() < 9) {
+                        throw new ErroAconteceuException("Por favor, informe o Cep do cliente");
+                    }
+
+                    //Iformando atributos para endereço do cliente e informando atributos
+                    Endereco endereco = cliente.getEndereco();
+                    endereco.setRua(fieldRua.getText());
+                    endereco.setBairro(fieldBairro.getText());
+                    endereco.setNumero(Integer.parseInt(fieldNumero.getText()));
+                    endereco.setCidade(fieldCidade.getText());
+                    endereco.setCep(fieldCep.getText());
+
+                    //Alterando o endereço do cliente
+                    cliente.setEndereco(endereco);
+                    cliente.setNome(fieldNome.getText());
+                    cliente.setEmail(fieldEmail.getText());
+                    cliente.setCpf(fieldCpf.getText());
+                    cliente.setSituacao(Cliente.Situacao.Normal);
+
+                    //Verificando botão de rádio para o cliente
+                    Pessoa.Sexo sexo;
+                    if (radioMasculino.isSelected()) {
+                        sexo = Pessoa.Sexo.Masculino;
+                    } else if (radioFeminino.isSelected()) {
+                        sexo = Pessoa.Sexo.Feminino;
+                    } else if (radioOutro.isSelected()) {
+                        sexo = Pessoa.Sexo.Outro;
+                    } else {
+                        throw new ErroAconteceuException("Por favor, Selecione o Sexo do cliente");
+                    }
+                    //Definindo botao de radio escolhido
+                    cliente.setSexo(sexo);
+                    //Salvando cliente
+                    if (gerenciador.update(cliente)) {
+                        JOptionPane jOptionPane = new JOptionPane("Cliente atualizado com sucesso");
+                        parent = jOptionPane.createDialog("Sucesso");
+                        parent.setVisible(true);
+                        for (JTextField jTextField : textFields) {
+                            jTextField.setText("");
+                        }
+                        painelFormulario.setVisible(false);
+                        fieldCpf.setText("");
+                    } else {
+                        JOptionPane jOptionPane = new JOptionPane("Novo cliente não pode ser atualizado");
+                        parent = jOptionPane.createDialog("Erro");
+                        parent.setVisible(true);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane jOptionPane = new JOptionPane("Informe apenas algarismos para o campo número", JOptionPane.WARNING_MESSAGE);
+                    parent = jOptionPane.createDialog("Erro");
+                    parent.setVisible(true);
+                } catch (ErroAconteceuException ex) {
+                    JOptionPane jOptionPane = new JOptionPane(ex.getMessage(), JOptionPane.WARNING_MESSAGE);
+                    parent = jOptionPane.createDialog("Erro");
+                    parent.setVisible(true);
+                } catch (Exception ex) {
+                    JOptionPane jOptionPane = new JOptionPane("Cliente não pode ser atualizado");
+                    parent = jOptionPane.createDialog("Erro");
+                    parent.setVisible(true);
+                }
             }
 
         }

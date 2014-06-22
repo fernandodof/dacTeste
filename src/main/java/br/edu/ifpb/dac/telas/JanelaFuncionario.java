@@ -38,6 +38,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         this.btRealizarVenda.addActionListener(tb);
         this.btCadastrarProduto.addActionListener(tb);
         this.btBuscarCliente.addActionListener(tb);
+        this.btBuscarProduto.addActionListener(tb);
         lbNomeFuncionario.setText(gerenciador.getFuncionario().getNome());
         thisDialog = this;
     }
@@ -62,6 +63,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         btBuscarCliente = new javax.swing.JButton();
         btCadastrarMaterial = new javax.swing.JButton();
         btCadastrarProduto = new javax.swing.JButton();
+        btBuscarProduto = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -113,10 +115,10 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 btRealizarVendaActionPerformed(evt);
             }
         });
-        jPanel2.add(btRealizarVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 210, -1));
+        jPanel2.add(btRealizarVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 210, -1));
 
         btBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btBuscarCliente.setText("Buscar Cliente");
+        btBuscarCliente.setText("Buscar/Editar Cliente");
         btBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarClienteActionPerformed(evt);
@@ -141,6 +143,10 @@ public class JanelaFuncionario extends java.awt.Dialog {
             }
         });
         jPanel2.add(btCadastrarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 210, -1));
+
+        btBuscarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btBuscarProduto.setText("Buscar Editar Produto");
+        jPanel2.add(btBuscarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 210, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 290, 720));
 
@@ -179,6 +185,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarCliente;
+    private javax.swing.JButton btBuscarProduto;
     private javax.swing.JButton btCadastrarClientes;
     private javax.swing.JButton btCadastrarFornecedor;
     private javax.swing.JButton btCadastrarFuncionario;
@@ -210,6 +217,8 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 new JanelaRealizarVenda(null, true).setVisible(true);
             }else if (e.getSource().equals(btCadastrarProduto)){
                 this.chamarNovoPainel(new PanelCadastrarProduto());
+            }else if (e.getSource().equals(btBuscarProduto)){
+                this.chamarNovoPainel(new PainelBuscarProduto());
             }
         }
             

@@ -36,11 +36,6 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
         return em;
     }
 
-//    public UserTransaction getTransacao() throws NamingException {
-//        Context context = (Context) new InitialContext().lookup("java:comp");
-//        UserTransaction userTransaction = (UserTransaction) context.lookup("UserTransaction");
-//        return userTransaction;
-//    }
     @Override
     public boolean save(T entity) {
         try {
@@ -56,6 +51,7 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
         }
     }
 
+    @Override
     public boolean update(T entity) {
         try {
             this.em.getTransaction().begin();
