@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -27,6 +29,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @SequenceGenerator(name = "seq_venda", sequenceName = "sequencia_venda", allocationSize = 1, initialValue = 1)
+@NamedQueries({
+    @NamedQuery(name="Vendas.findUltimasVendas", query = "SELECT V FROM Venda V ORDER BY v.data DESC")})
 public class Venda implements Serializable {
 
     @Id
@@ -76,7 +80,7 @@ public class Venda implements Serializable {
     public void setItensVenda(List<ItemVenda> itensVenda) {
         this.itensVenda = itensVenda;
     }
-
+    
     public void addItemVenda(ItemVenda itemVenda) {
         this.valor += itemVenda.getValor();
         this.itensVenda.add(itemVenda);
@@ -84,7 +88,7 @@ public class Venda implements Serializable {
 
     public boolean removeIntemVenda(Long idProduto) {
         for (ItemVenda itemVenda : itensVenda) {
-            if (Objects.equals(itemVenda.getId().getIdProduto(), idProduto)) {
+            if (Objects.equals(itemVenda.getIdProduto(), idProduto)) {
                 this.itensVenda.remove(itemVenda);
                 this.valor -= itemVenda.getValor();
                 return true;
@@ -94,5 +98,12 @@ public class Venda implements Serializable {
             this.valor = 0.0;
         }
         return false;
+    }
+   
+    public void addVariosItens(List<ItemVenda> itens){
+        for (ItemVenda itemVenda : itens) {
+            this.valor += itemVenda.getValor();
+        }
+        this.itensVenda.addAll(itens);
     }
 }

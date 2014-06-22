@@ -48,7 +48,6 @@ public class CarregaArquivo {
                 "image/x-windows-bmp", "image/gif");
         File arquivo = new File(caminhoArquivo);
         String tipo = URLConnection.guessContentTypeFromName(arquivo.getName());
-        System.out.println("Tipo: "+tipo);
         return tipos.contains(tipo);
     }
 

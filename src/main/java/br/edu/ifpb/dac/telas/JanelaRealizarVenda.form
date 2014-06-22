@@ -417,29 +417,23 @@
         <Container class="javax.swing.JPanel" name="pRemover3">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="780" y="110" width="510" height="420"/>
+              <AbsoluteConstraints x="780" y="110" width="430" height="470"/>
             </Constraint>
           </Constraints>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbUltimoProdutoAdicionado" pref="500" max="32767" attributes="0"/>
-                          <Component id="lbImagemUltimoprodutoAdicionado" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lbImagemUltimoprodutoAdicionado" pref="430" max="32767" attributes="0"/>
+                  <Component id="lbUltimoProdutoAdicionado" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lbUltimoProdutoAdicionado" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lbImagemUltimoprodutoAdicionado" min="-2" pref="340" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="lbImagemUltimoprodutoAdicionado" pref="429" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

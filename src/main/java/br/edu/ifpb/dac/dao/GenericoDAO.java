@@ -30,4 +30,5 @@ public interface GenericoDAO<T> {
     public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException;
     public List<T> getListResultOfNamedQuery(String namedQuery) throws NoResultException;
     public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException;
+    public List<T> getListResultOfNamedQuaryWithLimit(String namedQuery, int min, int max);
 }

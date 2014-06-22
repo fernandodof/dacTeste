@@ -11,7 +11,7 @@
     <class>br.edu.ifpb.dac.beans.Produto</class>
     <class>br.edu.ifpb.dac.beans.Venda</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projeto_dac_1"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/projeto_dac_1"/>
       <property name="javax.persistence.jdbc.password" value="123456"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.telas;
 
+import br.edu.ifpb.dac.PK.ItemVendaPK;
 import br.edu.ifpb.dac.beans.Cliente;
 import br.edu.ifpb.dac.beans.Funcionario;
 import br.edu.ifpb.dac.beans.ItemVenda;
@@ -12,16 +13,19 @@ import br.edu.ifpb.dac.beans.Produto;
 import br.edu.ifpb.dac.beans.Venda;
 import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import br.edu.ifpb.dac.gerenciador.Gerenciador;
+import br.edu.ifpb.dac.temp.ProdutoQuantidadeValor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.persistence.NoResultException;
@@ -41,8 +45,9 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
     private List<JTextField> textFields = new ArrayList();
     private List<Component> components;
     private DefaultTableModel dtm;
-    private List<ItemVenda> intensVenda = new ArrayList();
-    private Venda venda = new Venda(new Date());
+    private List<ItemVenda> itensVenda = new ArrayList();
+    private double valorVenda = 0.0;
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     /**
      * Creates new form JanelaRealizarVenda
@@ -63,8 +68,8 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                 textFields.add((JTextField) component);
             }
         }
-        gerenciador.save(venda);
-        lbNumeroVenda.setText("Venda Número: "+String.valueOf(venda.getId()));
+//        gerenciador.save(venda);
+//        lbNumeroVenda.setText("Venda Número: "+String.valueOf(venda.getId()));
         tableaProdutos.getColumnModel().getColumn(0).setPreferredWidth(35);
         tableaProdutos.getColumnModel().getColumn(1).setPreferredWidth(160);
         tableaProdutos.getColumnModel().getColumn(2).setPreferredWidth(35);
@@ -337,22 +342,18 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
         pRemover3.setLayout(pRemover3Layout);
         pRemover3Layout.setHorizontalGroup(
             pRemover3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pRemover3Layout.createSequentialGroup()
-                .addGroup(pRemover3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbUltimoProdutoAdicionado, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(lbImagemUltimoprodutoAdicionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(lbImagemUltimoprodutoAdicionado, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+            .addComponent(lbUltimoProdutoAdicionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pRemover3Layout.setVerticalGroup(
             pRemover3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pRemover3Layout.createSequentialGroup()
                 .addComponent(lbUltimoProdutoAdicionado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lbImagemUltimoprodutoAdicionado, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbImagemUltimoprodutoAdicionado, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE))
         );
 
-        jPanel1.add(pRemover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 510, 420));
+        jPanel1.add(pRemover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 430, 470));
 
         lbNumeroVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbNumeroVenda.setForeground(new java.awt.Color(0, 153, 153));
@@ -370,7 +371,6 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
-        gerenciador.delete(venda);
         dispose();
     }//GEN-LAST:event_closeDialog
 
@@ -380,7 +380,6 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
 
     private void btCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarVendaActionPerformed
         setVisible(false);
-        gerenciador.delete(venda);
         dispose();
     }//GEN-LAST:event_btCancelarVendaActionPerformed
 
@@ -425,7 +424,7 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
     private javax.swing.JPanel painelMaior;
     private javax.swing.JTable tableaProdutos;
     // End of variables declaration//GEN-END:variables
-    private class TrataBotao implements ActionListener {
+      private class TrataBotao implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -465,14 +464,13 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                         throw new ErroAconteceuException("Existem apenas " + produto.getQuantidade() + " unidade(s) no estoque");
                     }
                     produto.setQuantidade(produto.getQuantidade() - quantidade);
-                    ItemVenda itemVenda = new ItemVenda(venda.getId(), produto.getId(), produto.getValor(), quantidade);
-                    venda.addItemVenda(itemVenda);
-
+                    ItemVenda itemVenda = new ItemVenda(produto.getId(), produto.getValor(), quantidade);
+                    addItemVenda(itemVenda);
                     dtm = (DefaultTableModel) tableaProdutos.getModel();
                     dtm.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getTamanho(), quantidade, produto.getValor(), produto.getValor() * quantidade});
                     lbUltimoProdutoAdicionado.setText("Último Produto Adicionado");
                     lbImagemUltimoprodutoAdicionado.setIcon(new ImageIcon(produto.getImagem()));
-                    lbValorTotalVenda.setText("Valor Total R$ " + venda.getValor());
+                    lbValorTotalVenda.setText("Valor Total R$ " + valorVenda);
                 } catch (ErroAconteceuException ex) {
                     lbMensagem.setText(ex.getMessage());
                 } catch (NumberFormatException ex) {
@@ -492,16 +490,16 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                         params.put("codigo", codigo);
                         Produto produto = (Produto) gerenciador.getSingleResultOfNamedQuery("Produto.findByCodigo", params);
                         produto.setQuantidade(produto.getQuantidade() + quantidade);
-                        venda.removeIntemVenda(produto.getId());
+                        removeIntemVenda(produto.getId());
                         dtm.removeRow(tableaProdutos.getSelectedRow());
                         fieldCodigoProduto.setText("");
                         fieldQuantidade.setText("");
-                        lbValorTotalVenda.setText("Valor Total R$ " + venda.getValor());
-                        if (venda.getItensVenda().isEmpty()) {
+                        lbValorTotalVenda.setText("Valor Total R$ " + valorVenda);
+                        if (itensVenda.isEmpty()) {
                             lbUltimoProdutoAdicionado.setText(null);
                             lbImagemUltimoprodutoAdicionado.setIcon(null);
                         } else {
-                            Produto p = (Produto) gerenciador.getById(Produto.class, venda.getItensVenda().get(venda.getItensVenda().size() - 1).getId().getIdProduto());
+                            Produto p = (Produto) gerenciador.getById(Produto.class, itensVenda.get(itensVenda.size() - 1).getIdProduto());
                             lbUltimoProdutoAdicionado.setText("Último Produto Adicionado");
                             lbImagemUltimoprodutoAdicionado.setIcon(new ImageIcon(p.getImagem()));
                         }
@@ -513,11 +511,18 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                 try {
                     if (fieldCpf.getText() == null || fieldCpf.getText().trim().length() < 12) {
                         throw new ErroAconteceuException("Por favor informe o CPF do cliente");
-                    } else if (venda.getItensVenda().isEmpty()) {
+                    } else if (itensVenda.isEmpty()) {
                         throw new ErroAconteceuException("Por favor adicione pelo menos um produto");
                     }
-
+                    Venda venda = new Venda(new Date());
                     gerenciador.save(venda);
+                    for (ItemVenda itemVenda : itensVenda) {
+                        itemVenda.setId(venda.getId());
+                        venda.addItemVenda(itemVenda);
+                        Produto produto = (Produto) gerenciador.getById(Produto.class, itemVenda.getIdProduto());
+                        gerenciador.update(produto);
+                    }
+                    gerenciador.update(venda);
                     Funcionario funcionario = gerenciador.getFuncionario();
                     funcionario.addVenda(venda);
                     gerenciador.update(funcionario);
@@ -527,7 +532,7 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                     Cliente cliente = (Cliente) gerenciador.getSingleResultOfNamedQuery("Cliente.findByCPF", parametros);
                     cliente.addCompra(venda);
                     gerenciador.update(cliente);
-                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso. Numero da Venda: "+ String.valueOf(venda.getId()));
+                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso. Numero da Venda: " + String.valueOf(venda.getId()));
                     setVisible(false);
                     dispose();
                 } catch (ErroAconteceuException ex) {
@@ -542,5 +547,26 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
             return matcher.matches();
         }
 
+    }
+
+    public boolean removeIntemVenda(Long idProduto) {
+        for (ItemVenda itemVenda : itensVenda) {
+            if (Objects.equals(itemVenda.getIdProduto(), idProduto)) {
+                this.itensVenda.remove(itemVenda);
+                this.valorVenda -= itemVenda.getValor();
+                this.valorVenda = Double.parseDouble(df.format(this.valorVenda));
+                return true;
+            }
+        }
+        if (itensVenda.isEmpty()) {
+            this.valorVenda = 0.0;
+        }
+        return false;
+    }
+
+    public void addItemVenda(ItemVenda itemVenda) {
+        this.valorVenda += itemVenda.getValor();
+        this.valorVenda = Double.parseDouble(df.format(this.valorVenda));
+        this.itensVenda.add(itemVenda);
     }
 }

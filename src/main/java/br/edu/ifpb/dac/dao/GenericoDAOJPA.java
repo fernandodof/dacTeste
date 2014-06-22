@@ -148,4 +148,16 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
         return query.getResultList();
     }
 
+    @Override
+    public List<T> getListResultOfNamedQuaryWithLimit(String namedQuery, int min, int max) {
+        Query query = this.em.createNamedQuery(namedQuery);
+        if (query.getResultList().isEmpty()) {
+            throw new NoResultException();
+        } else {
+            return query.setMaxResults(max).setFirstResult(min).getResultList();
+        }
+    }
+    
+    
+
 }

@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -45,7 +46,7 @@ public class Produto implements Serializable {
     private double valor;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Material> materiais = new ArrayList();
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Fornecedor fornecedor;
     private String marca;
     @Basic(fetch = FetchType.LAZY)

@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.PK.ItemVendaPK;
 import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 /**
  *
@@ -21,14 +22,15 @@ public class ItemVenda implements Serializable {
     private ItemVendaPK id;
     private double valor = 0.0;
     private int quantidade;
+    @Transient
+    private long idProduto;
 
     public ItemVenda() {
     }
 
-    public ItemVenda(Long idVenda, Long idProduto, double valorUnitario, int quantidade) {
-        this.id = new ItemVendaPK(idProduto, idVenda);
+    public ItemVenda(Long idProduto, double valorUnitario, int quantidade) {
+        this.idProduto = idProduto;
         this.quantidade = quantidade;
-//        produto.setQuantidade(produto.getQuantidade() - quantidade);
         this.valor = valorUnitario * quantidade;
     }
 
@@ -36,8 +38,8 @@ public class ItemVenda implements Serializable {
         return id;
     }
 
-    public void setId(ItemVendaPK id) {
-        this.id = id;
+    public void setId(Long idVenda) {
+        this.id = new ItemVendaPK(this.idProduto,idVenda);
     }
 
     public double getValor() {
@@ -56,4 +58,12 @@ public class ItemVenda implements Serializable {
         this.quantidade = quantidade;
     }
 
+    public long getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(long idProduto) {
+        this.idProduto = idProduto;
+    }
+   
 }

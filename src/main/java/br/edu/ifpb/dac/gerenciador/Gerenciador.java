@@ -66,6 +66,10 @@ public class Gerenciador<T> {
     public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
         return this.dao.getListResultOfNamedQuery(namedQuery, map);
     }
+    
+    public List<T> getListResultOfNamedQuaryWithLimit(String namedQuery, int min, int max) {
+        return this.dao.getListResultOfNamedQuaryWithLimit(namedQuery, min, max);
+    }
 
     public void saveEntityList(List<T> entities) {
         for (T t : entities) {
