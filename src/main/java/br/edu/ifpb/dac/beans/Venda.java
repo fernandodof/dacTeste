@@ -30,7 +30,9 @@ import javax.persistence.TemporalType;
 @Entity
 @SequenceGenerator(name = "seq_venda", sequenceName = "sequencia_venda", allocationSize = 1, initialValue = 1)
 @NamedQueries({
-    @NamedQuery(name="Vendas.findUltimasVendas", query = "SELECT V FROM Venda V ORDER BY v.data DESC")})
+    @NamedQuery(name="Vendas.findUltimasVendas", query = "SELECT V FROM Venda V ORDER BY V.data DESC, V.id DESC"),
+    @NamedQuery(name="Vendas.quantidade", query = "SELECT count (V) FROM Venda V"),
+    @NamedQuery(name = "Vendas.data", query = "SELECT V FROM Venda V WHERE V.data = :data")})
 public class Venda implements Serializable {
 
     @Id

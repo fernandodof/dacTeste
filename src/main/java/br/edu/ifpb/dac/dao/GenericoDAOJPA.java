@@ -101,8 +101,8 @@ public class GenericoDAOJPA<T> implements GenericoDAO<T> {
     }
 
     @Override
-    public T executeNativeQuery(String query) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object executeNativeQuery(String query) {
+        return this.em.createNativeQuery(query).getSingleResult();
     }
 
     @Override

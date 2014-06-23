@@ -457,7 +457,7 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
                     } else {
                         cbSituacao.setSelectedIndex(1);
                     }
-
+                    
                     fieldRua.setText(cliente.getEndereco().getRua());
                     fieldBairro.setText(cliente.getEndereco().getBairro());
                     fieldNumero.setText(String.valueOf(cliente.getEndereco().getNumero()));

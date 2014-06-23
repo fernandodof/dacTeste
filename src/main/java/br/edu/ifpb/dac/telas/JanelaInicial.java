@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class JanelaInicial extends javax.swing.JFrame {
     private Gerenciador gerenciador = Gerenciador.getInstance();
-    private TrataBotao tb;
+    private TrataBotao tb = new TrataBotao();
 
     /**
      * Creates new form Inicial

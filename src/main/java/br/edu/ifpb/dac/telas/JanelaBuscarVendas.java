@@ -5,13 +5,30 @@
  */
 package br.edu.ifpb.dac.telas;
 
+import br.edu.ifpb.dac.beans.Cliente;
+import br.edu.ifpb.dac.beans.Funcionario;
+import br.edu.ifpb.dac.beans.ItemVenda;
+import br.edu.ifpb.dac.beans.Produto;
 import br.edu.ifpb.dac.beans.Venda;
+import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import br.edu.ifpb.dac.gerenciador.Gerenciador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.persistence.Convert;
+import javax.persistence.NoResultException;
+import javax.persistence.TemporalType;
 import javax.swing.table.DefaultTableModel;
+import org.eclipse.persistence.config.TargetDatabase;
 
 /**
  *
@@ -20,10 +37,10 @@ import javax.swing.table.DefaultTableModel;
 public class JanelaBuscarVendas extends java.awt.Dialog {
 
     private Gerenciador gerenciador = Gerenciador.getInstance();
-    private TrataBotao tb;
+    private TrataBotao tb = new TrataBotao();
     int min = 0;
-    private List<Venda> vendas = gerenciador.getListResultOfNamedQuaryWithLimit("Vendas.findUltimasVendas", 0, 2);
-    int pagina = 1;
+    private List<Venda> vendas = gerenciador.getListResultOfNamedQuaryWithLimit("Vendas.findUltimasVendas", 0, 10);
+    long maxPaginas = (long) gerenciador.getSingleResultOfNamedQuery("Vendas.quantidade") / 10;
     private DefaultTableModel dtm;
 
     /**
@@ -33,12 +50,25 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        this.btBuscarPorNumero.addActionListener(tb);
+        this.btProximasVendas.addActionListener(tb);
+        this.btVendasAnteriores.addActionListener(tb);
+        this.btBuscarPorData.addActionListener(tb);
         dtm = (DefaultTableModel) tabelaVendas.getModel();
         for (Venda venda : vendas) {
-            dtm.addRow(new Object[]{venda.getId(),new SimpleDateFormat("dd/MM/yyyy").format(venda.getData()),venda.getValor()});
+            dtm.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(venda.getData()), venda.getId(), venda.getValor()});
         }
-        
-        
+        tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(130);
+        tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(25);
+        tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(35);
+
+        tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(240);
+        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(5);
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(5);
+        btVendasAnteriores.setEnabled(false);
+        if (maxPaginas <= 1) {
+            btProximasVendas.setEnabled(false);
+        }
     }
 
     /**
@@ -53,10 +83,21 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaVendas = new javax.swing.JTable();
+        btProximasVendas = new javax.swing.JButton();
+        btVendasAnteriores = new javax.swing.JButton();
+        lbFuncionario = new javax.swing.JLabel();
+        lbIndicacaoResultado = new javax.swing.JLabel();
+        painelProdutos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tabelaProdutos = new javax.swing.JTable();
+        lbCliente = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        fieldIdVenda = new javax.swing.JTextField();
+        btBuscarPorNumero = new javax.swing.JButton();
+        lbMensagem = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        fieldData = new javax.swing.JFormattedTextField();
+        btBuscarPorData = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -74,7 +115,7 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
 
             },
             new String [] {
-                "Número venda", "Data", "Valor"
+                "Data", "Número venda", "Valor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -86,26 +127,98 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
             }
         });
         tabelaVendas.setRowHeight(22);
+        tabelaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaVendasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaVendas);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 510, 450));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 410, 250));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        btProximasVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btProximasVendas.setText(">>");
+        jPanel2.add(btProximasVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 520, 450));
+        btVendasAnteriores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btVendasAnteriores.setText("<<");
+        jPanel2.add(btVendasAnteriores, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText(">>");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, -1, -1));
+        lbFuncionario.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jPanel2.add(lbFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 670, 20));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("<<");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, -1, -1));
+        lbIndicacaoResultado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbIndicacaoResultado.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel2.add(lbIndicacaoResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 670, 20));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1090, 520));
+        painelProdutos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Quantidade", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaProdutos.setRowHeight(22);
+        jScrollPane2.setViewportView(tabelaProdutos);
+
+        painelProdutos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 670, 160));
+
+        jPanel2.add(painelProdutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 690, 190));
+
+        lbCliente.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbCliente.setForeground(new java.awt.Color(51, 51, 255));
+        jPanel2.add(lbCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 670, 20));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 1120, 310));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Buscar Venda:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        fieldIdVenda.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel1.add(fieldIdVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 200, -1));
+
+        btBuscarPorNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btBuscarPorNumero.setText("Buscar");
+        jPanel1.add(btBuscarPorNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+
+        lbMensagem.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbMensagem.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.add(lbMensagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 670, 20));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Buscar vendas por data:");
+        jLabel2.setToolTipText("");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+
+        try {
+            fieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        fieldData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldDataActionPerformed(evt);
+            }
+        });
+        jPanel1.add(fieldData, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 120, -1));
+
+        btBuscarPorData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btBuscarPorData.setText("Buscar");
+        jPanel1.add(btBuscarPorData, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, -1, -1));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -120,26 +233,173 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
+        lbMensagem.setText("");
+        String idVenda = (String.valueOf(dtm.getValueAt(tabelaVendas.getSelectedRow(), 1)));
+        Cliente cliente = (Cliente) gerenciador.getById(Cliente.class,
+                gerenciador.executeNativeQuery("SELECT cliente_id FROM cliente_venda WHERE compras_id = " + idVenda));
+        Funcionario funcionario = (Funcionario) gerenciador.getById(Funcionario.class,
+                gerenciador.executeNativeQuery("SELECT funcionario_id FROM funcionario_venda WHERE vendas_id = " + idVenda));
+        Venda venda = (Venda) gerenciador.getById(Venda.class, Long.parseLong(idVenda));
+
+        lbIndicacaoResultado.setText("Produto(s) adiquiridos na venda " + idVenda);
+        lbCliente.setText("Cliente: " + cliente.getNome());
+        lbFuncionario.setText("Funcionário: " + funcionario.getNome());
+        Produto produto;
+
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm = (DefaultTableModel) tabelaProdutos.getModel();
+        dtm.setNumRows(0);
+        for (ItemVenda itemVenda : venda.getItensVenda()) {
+            produto = (Produto) gerenciador.getById(Produto.class, itemVenda.getId().getIdProduto());
+            dtm.addRow(new Object[]{produto.getDescricao(), itemVenda.getQuantidade(), itemVenda.getValor()});
+        }
+
+    }//GEN-LAST:event_tabelaVendasMouseClicked
+
+    private void fieldDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldDataActionPerformed
+
+    private void carregarTabelaDeVendas(int inicio) {
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm = (DefaultTableModel) tabelaVendas.getModel();
+        dtm.setNumRows(0);
+        vendas = gerenciador.getListResultOfNamedQuaryWithLimit("Vendas.findUltimasVendas", inicio, 10);
+        for (Venda venda : vendas) {
+            dtm.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(venda.getData()), venda.getId(), venda.getValor()});
+        }
+    }
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btBuscarPorData;
+    private javax.swing.JButton btBuscarPorNumero;
+    private javax.swing.JButton btProximasVendas;
+    private javax.swing.JButton btVendasAnteriores;
+    private javax.swing.JFormattedTextField fieldData;
+    private javax.swing.JTextField fieldIdVenda;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lbCliente;
+    private javax.swing.JLabel lbFuncionario;
+    private javax.swing.JLabel lbIndicacaoResultado;
+    private javax.swing.JLabel lbMensagem;
+    private javax.swing.JPanel painelProdutos;
+    private javax.swing.JTable tabelaProdutos;
     private javax.swing.JTable tabelaVendas;
     // End of variables declaration//GEN-END:variables
     private class TrataBotao implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            if (e.getSource().equals(btBuscarPorNumero)) {
+                try {
+                    DefaultTableModel dtm = new DefaultTableModel();
+                    dtm = (DefaultTableModel) tabelaProdutos.getModel();
+                    dtm.setRowCount(0);
+                    lbMensagem.setText("");
+                    lbCliente.setText("");
+                    lbFuncionario.setText("");
+                    lbIndicacaoResultado.setText("");
+                    String idVenda = fieldIdVenda.getText();
+                    if (idVenda.isEmpty() || !verificaNumeros(idVenda)) {
+                        throw new ErroAconteceuException("Por favor informe um número válido para a venda");
+                    }
+
+                    Cliente cliente = (Cliente) gerenciador.getById(Cliente.class,
+                            gerenciador.executeNativeQuery("SELECT cliente_id FROM cliente_venda WHERE compras_id = " + idVenda));
+                    Funcionario funcionario = (Funcionario) gerenciador.getById(Funcionario.class,
+                            gerenciador.executeNativeQuery("SELECT funcionario_id FROM funcionario_venda WHERE vendas_id = " + idVenda));
+                    Venda venda = (Venda) gerenciador.getById(Venda.class, Long.parseLong(idVenda));
+
+                    lbIndicacaoResultado.setText("Produto(s) adiquiridos na venda " + idVenda);
+                    lbCliente.setText("Cliente: " + cliente.getNome());
+                    lbFuncionario.setText("Funcionário: " + funcionario.getNome());
+                    Produto produto;
+
+                    for (ItemVenda itemVenda : venda.getItensVenda()) {
+                        produto = (Produto) gerenciador.getById(Produto.class, itemVenda.getId().getIdProduto());
+                        dtm.addRow(new Object[]{produto.getDescricao(), itemVenda.getQuantidade(), itemVenda.getValor()});
+                    }
+                } catch (ErroAconteceuException ex) {
+                    lbMensagem.setText(ex.getMessage());
+                } catch (NoResultException ex) {
+                    lbMensagem.setText("Venda não encontrada");
+                }
+            } else if (e.getSource().equals(btBuscarPorData)) {
+                try {
+                    lbMensagem.setText("");
+                    if (fieldData.getText().trim().length() < 10) {
+                        throw new ErroAconteceuException("Data Invalida");
+                    }
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date data = null;
+                    try {
+                        data = simpleDateFormat.parse(fieldData.getText());
+                    } catch (ParseException ex) {
+                        throw new ErroAconteceuException("Data Invalida");
+                    }
+                    if(data.after(new Date())){
+                        throw new ErroAconteceuException("Data Invalida");
+                    }
+//                Map<String, Object> params = new HashMap();
+//                params.put("data", fieldData.getText());
+                    dtm = (DefaultTableModel) tabelaVendas.getModel();
+                    dtm.setRowCount(0);
+                    vendas = (List<Venda>) gerenciador.getEntityManager().createQuery("SELECT V FROM Venda V WHERE V.data = :data").
+                            setParameter("data", data, TemporalType.DATE).getResultList();
+                    if (vendas.isEmpty()) {
+                        throw new ErroAconteceuException("Não existem vendas para esta data");
+                    }
+
+                    for (Venda venda : vendas) {
+                        dtm.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(venda.getData()), venda.getId(), venda.getValor()});
+                    }
+                    btProximasVendas.setEnabled(false);
+                    btVendasAnteriores.setEnabled(false);
+                } catch (ErroAconteceuException ex) {
+                    lbMensagem.setText(ex.getMessage());
+                } catch (NoResultException ex) {
+                    lbMensagem.setText("Não existem vendas para esta data");
+                }
+            } else if (e.getSource().equals(btProximasVendas)) {
+                min += 10;
+                carregarTabelaDeVendas(min);
+                btVendasAnteriores.setEnabled(true);
+                if (((int) min / 10) < maxPaginas) {
+                    btProximasVendas.setEnabled(true);
+                } else {
+                    btProximasVendas.setEnabled(false);
+                }
+            } else if (e.getSource().equals(btVendasAnteriores)) {
+                min -= 10;
+                carregarTabelaDeVendas(min);
+                if (((int) min / 10) < 1) {
+                    btVendasAnteriores.setEnabled(false);
+                } else {
+                    btProximasVendas.setEnabled(true);
+                }
+
+                if (((int) min / 10) < maxPaginas) {
+                    btProximasVendas.setEnabled(true);
+                } else {
+                    btProximasVendas.setEnabled(false);
+                }
+            }
         }
 
+    }
+
+    private boolean verificaNumeros(String numero) {
+        Pattern pattern = Pattern.compile("^\\d+$");
+        Matcher matcher = pattern.matcher(numero);
+        return matcher.matches();
     }
 }

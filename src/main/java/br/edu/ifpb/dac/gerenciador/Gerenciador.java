@@ -12,6 +12,7 @@ import br.edu.ifpb.dac.dao.GenericoDAOJPA;
 import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
 /**
@@ -38,8 +39,8 @@ public class Gerenciador<T> {
     public boolean update(T entity) {
         return this.dao.update(entity);
     }
-    
-    public boolean delete(T entity){
+
+    public boolean delete(T entity) {
         return this.dao.delete(entity);
     }
 
@@ -51,11 +52,11 @@ public class Gerenciador<T> {
         return (T) this.dao.getById(classe, id);
     }
 
-    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException{
+    public T getSingleResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
         return (T) this.dao.getSingleResultOfNamedQuery(namedQuery, map);
     }
 
-    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException{
+    public T getSingleResultOfNamedQuery(String namedQuery) throws NoResultException {
         return (T) this.dao.getSingleResultOfNamedQuery(namedQuery);
     }
 
@@ -66,7 +67,7 @@ public class Gerenciador<T> {
     public List<T> getListResultOfNamedQuery(String namedQuery, Map<String, Object> map) throws NoResultException {
         return this.dao.getListResultOfNamedQuery(namedQuery, map);
     }
-    
+
     public List<T> getListResultOfNamedQuaryWithLimit(String namedQuery, int min, int max) {
         return this.dao.getListResultOfNamedQuaryWithLimit(namedQuery, min, max);
     }
@@ -83,6 +84,14 @@ public class Gerenciador<T> {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public Object executeNativeQuery(String query) {
+        return this.dao.executeNativeQuery(query);
+    }
+
+    public EntityManager getEntityManager() {
+        return this.dao.getEntityManager();
     }
 
 //    public boolean cadastrarCliente(Cliente cliente) throws ErroAconteceuException {
