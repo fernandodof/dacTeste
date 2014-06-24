@@ -13,7 +13,6 @@ import br.edu.ifpb.dac.beans.Produto;
 import br.edu.ifpb.dac.beans.Venda;
 import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import br.edu.ifpb.dac.gerenciador.Gerenciador;
-import br.edu.ifpb.dac.temp.ProdutoQuantidadeValor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
