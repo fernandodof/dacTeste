@@ -16,6 +16,7 @@ import br.edu.ifpb.dac.beans.Produto;
 import br.edu.ifpb.dac.beans.Venda;
 import br.edu.ifpb.dac.dao.GenericoDAO;
 import br.edu.ifpb.dac.dao.GenericoDAOJPA;
+import br.edu.ifpb.dac.encriptar.EncriptarSenha;
 import java.util.Date;
 
 /**
@@ -27,55 +28,57 @@ public class App {
     public static void main(String[] args) {
         GenericoDAO genericoDAO = new GenericoDAOJPA();
         //Criando 1 funcionário
-        Funcionario funcionario1 = new Funcionario("fernando", "123456", "1234", "Fernando", Pessoa.Sexo.Masculino);
+        Funcionario funcionario1 = new Funcionario("fernando", EncriptarSenha.encriptar("123456"), "222.222.222-22", "Fernando", Pessoa.Sexo.Masculino);
         Endereco endereco = new Endereco();
         endereco.setRua("Dimas andriola");
         endereco.setBairro("Jardim Oásis");
         endereco.setCep("58900.000");
         endereco.setCidade("Cajazeiras");
         endereco.setNumero(25);
-        genericoDAO.save(funcionario1);
-        funcionario1.setEndereco(endereco);
+//        funcionario1.setEndereco(endereco);
+        genericoDAO.save(endereco);
 
-        //Criando 2 clientes
-        Cliente cliente1 = new Cliente("000.000.000-00", "Ricardo", "souzajob@gmail.com", Pessoa.Sexo.Masculino);
+
         
-        Endereco endereco1 = new Endereco();
-        endereco.setRua("Dimas andriola");
-        endereco.setBairro("Jardim Oásis");
-        endereco.setCep("58900.000");
-        endereco.setCidade("Cajazeiras");
-        endereco.setNumero(25);
-        cliente1.setEndereco(endereco1);
-        
-        Cliente cliente2 = new Cliente("111.111.111-11", "Izabel", "ads.izabel@gmail.com", Pessoa.Sexo.Feminino);
-        Endereco endereco2 = new Endereco();
-        endereco.setRua("Dimas andriola");
-        endereco.setBairro("Jardim Oásis");
-        endereco.setCep("58900.000");
-        endereco.setCidade("Cajazeiras");
-        endereco.setNumero(25);
-        cliente1.setEndereco(endereco2);
-        
-        genericoDAO.save(cliente1);
-        genericoDAO.save(cliente2);
-
-        //Criando 2 clientes
-        Fornecedor fornecedor1 = new Fornecedor("123", "Adidas Compnay");
-        Fornecedor fornecedor2 = new Fornecedor("1234", "Nike Inc");
-        genericoDAO.save(fornecedor1);
-        genericoDAO.save(fornecedor2);
-
-        //Criando meteriais
-        Material material1 = new Material("EVA");
-        Material material2 = new Material("Polyester");
-        Material material3 = new Material("Tecido");
-        Material material4 = new Material("Sitético");
-        genericoDAO.save(material1);
-        genericoDAO.save(material2);
-        genericoDAO.save(material3);
-        genericoDAO.save(material4);
-
+//        //Criando 2 clientes
+//        Cliente cliente1 = new Cliente("000.000.000-00", "Ricardo", "souzajob@gmail.com", Pessoa.Sexo.Masculino);
+//        
+//        Endereco endereco1 = new Endereco();
+//        endereco.setRua("Dimas andriola");
+//        endereco.setBairro("Jardim Oásis");
+//        endereco.setCep("58900.000");
+//        endereco.setCidade("Cajazeiras");
+//        endereco.setNumero(25);
+//        cliente1.setEndereco(endereco1);
+//        
+//        Cliente cliente2 = new Cliente("111.111.111-11", "Izabel", "ads.izabel@gmail.com", Pessoa.Sexo.Feminino);
+//        Endereco endereco2 = new Endereco();
+//        endereco.setRua("Dimas andriola");
+//        endereco.setBairro("Jardim Oásis");
+//        endereco.setCep("58900.000");
+//        endereco.setCidade("Cajazeiras");
+//        endereco.setNumero(25);
+//        cliente1.setEndereco(endereco2);
+//        
+//        genericoDAO.save(cliente1);
+//        genericoDAO.save(cliente2);
+//
+//        //Criando 2 clientes
+//        Fornecedor fornecedor1 = new Fornecedor("123", "Adidas Compnay");
+//        Fornecedor fornecedor2 = new Fornecedor("1234", "Nike Inc");
+//        genericoDAO.save(fornecedor1);
+//        genericoDAO.save(fornecedor2);
+//
+//        //Criando meteriais
+//        Material material1 = new Material("EVA");
+//        Material material2 = new Material("Polyester");
+//        Material material3 = new Material("Tecido");
+//        Material material4 = new Material("Sitético");
+//        genericoDAO.save(material1);
+//        genericoDAO.save(material2);
+//        genericoDAO.save(material3);
+//        genericoDAO.save(material4);
+//
 //        //Criando produtos
 //        Produto produto1 = new Produto("A-001", 5, "Tênis Adidas Vanquish 6", 37, 149.90, fornecedor1, "Adidas");
 //        produto1.addMeterial(material1);
@@ -160,8 +163,8 @@ public class App {
 //        genericoDAO.save(produto14);
 //        genericoDAO.save(produto15);
 //        genericoDAO.save(produto16);
-
-        //Criando venda        
+//
+//        //Criando venda        
 //        Venda venda1 = new Venda(new Date());
 //        genericoDAO.save(venda1);
 //        //Criando item venda

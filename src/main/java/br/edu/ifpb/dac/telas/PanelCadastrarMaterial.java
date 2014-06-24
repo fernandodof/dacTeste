@@ -65,8 +65,12 @@ public class PanelCadastrarMaterial extends javax.swing.JPanel {
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        painelMaior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        painelMaior.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 21, -1, -1));
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Descrição:");
+        painelMaior.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 24, -1, -1));
 
         fieldDescricao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fieldDescricao.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +78,7 @@ public class PanelCadastrarMaterial extends javax.swing.JPanel {
                 fieldDescricaoActionPerformed(evt);
             }
         });
+        painelMaior.add(fieldDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 21, 490, -1));
 
         btCadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btCadastrar.setText("Cadastrar");
@@ -82,38 +87,7 @@ public class PanelCadastrarMaterial extends javax.swing.JPanel {
                 btCadastrarActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout painelMaiorLayout = new javax.swing.GroupLayout(painelMaior);
-        painelMaior.setLayout(painelMaiorLayout);
-        painelMaiorLayout.setHorizontalGroup(
-            painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelMaiorLayout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGroup(painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMaiorLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel2)
-                        .addContainerGap(485, Short.MAX_VALUE))
-                    .addGroup(painelMaiorLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldDescricao))))
-            .addGroup(painelMaiorLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btCadastrar))
-        );
-        painelMaiorLayout.setVerticalGroup(
-            painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelMaiorLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMaiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(fieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addComponent(btCadastrar)
-                .addContainerGap(592, Short.MAX_VALUE))
-        );
+        painelMaior.add(btCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
         add(painelMaior, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 60, 590, 690));
 

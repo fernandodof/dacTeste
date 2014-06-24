@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.telas;
 import br.edu.ifpb.dac.beans.Endereco;
 import br.edu.ifpb.dac.beans.Funcionario;
 import br.edu.ifpb.dac.beans.Pessoa;
+import br.edu.ifpb.dac.encriptar.EncriptarSenha;
 import br.edu.ifpb.dac.exceptions.ErroAconteceuException;
 import br.edu.ifpb.dac.gerenciador.Gerenciador;
 import java.awt.Component;
@@ -485,7 +486,7 @@ public class PanelCadastrarFuncionario extends javax.swing.JPanel {
                     funcionario.setSexo(sexo);
                     funcionario.setSlaraio(salario);
                     funcionario.setLogin(fieldLogin.getText());
-                    funcionario.setSenha(new String(fieldSenha1.getPassword()));
+                    funcionario.setSenha(EncriptarSenha.encriptar(new String(fieldSenha1.getPassword())));
 
                     //Salvar funcionário
                     if (gerenciador.save(funcionario)) {

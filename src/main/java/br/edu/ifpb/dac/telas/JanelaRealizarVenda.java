@@ -112,7 +112,7 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
         pRemover3 = new javax.swing.JPanel();
         lbUltimoProdutoAdicionado = new javax.swing.JLabel();
         lbImagemUltimoprodutoAdicionado = new javax.swing.JLabel();
-        lbNumeroVenda = new javax.swing.JLabel();
+        lbClienteInadimplente = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -355,11 +355,9 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
 
         jPanel1.add(pRemover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 430, 470));
 
-        lbNumeroVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lbNumeroVenda.setForeground(new java.awt.Color(0, 153, 153));
-        lbNumeroVenda.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbNumeroVenda.setToolTipText("");
-        jPanel1.add(lbNumeroVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 220, 30));
+        lbClienteInadimplente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbClienteInadimplente.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.add(lbClienteInadimplente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 600, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -411,10 +409,10 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbClienteInadimplente;
     private javax.swing.JLabel lbImagemUltimoprodutoAdicionado;
     private javax.swing.JLabel lbMensagem;
     private javax.swing.JLabel lbNomeCliente;
-    private javax.swing.JLabel lbNumeroVenda;
     private javax.swing.JLabel lbRealizarVenda;
     private javax.swing.JLabel lbUltimoProdutoAdicionado;
     private javax.swing.JLabel lbValorTotalVenda;
@@ -440,6 +438,9 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                     painelMaior.remove(btBuscar);
                     fieldCpf.setEditable(false);
                     fieldCpf.setBackground(Color.lightGray);
+                    if(cliente.getSituacao() == Cliente.Situacao.Inadimplente){
+                        lbClienteInadimplente.setText("Cliente em situação inadimplente");
+                    }
                 } catch (ErroAconteceuException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (NoResultException ex) {

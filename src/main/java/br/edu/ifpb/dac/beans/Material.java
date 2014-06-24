@@ -22,7 +22,8 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "seq_material", sequenceName = "sequencia_meterial", allocationSize = 1, initialValue = 1)
 @NamedQueries({
-    @NamedQuery(name="Material.findAll", query = "SELECT m FROM Material m")})
+    @NamedQuery(name = "Material.findAll", query = "SELECT m FROM Material m"),
+    @NamedQuery(name = "Material.getQuantidade", query = "SELECT count(m) FROM Material m")})
 public class Material implements Serializable {
 
     @Id

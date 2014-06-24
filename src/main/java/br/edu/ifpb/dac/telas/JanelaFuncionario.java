@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  * @author Fernando
  */
 public class JanelaFuncionario extends java.awt.Dialog {
-    
+
     Gerenciador gerenciador = Gerenciador.getInstance();
     private Dialog thisDialog;
     private TrataBotao tb;
@@ -40,8 +40,10 @@ public class JanelaFuncionario extends java.awt.Dialog {
         this.btBuscarCliente.addActionListener(tb);
         this.btBuscarProduto.addActionListener(tb);
         this.btBuscarVendas.addActionListener(tb);
+        this.btSair.addActionListener(tb);
         lbNomeFuncionario.setText(gerenciador.getFuncionario().getNome());
         thisDialog = this;
+        this.verificarBotoes();
     }
 
     /**
@@ -66,6 +68,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         btCadastrarProduto = new javax.swing.JButton();
         btBuscarProduto = new javax.swing.JButton();
         btBuscarVendas = new javax.swing.JButton();
+        btSair = new javax.swing.JButton();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -156,6 +159,11 @@ public class JanelaFuncionario extends java.awt.Dialog {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 290, 720));
 
+        btSair.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btSair.setForeground(new java.awt.Color(255, 0, 0));
+        btSair.setText("Sair");
+        jPanel1.add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, -1, -1));
+
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -167,6 +175,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
+        gerenciador.setFuncionario(null);
     }//GEN-LAST:event_closeDialog
 
     private void btCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarFuncionarioActionPerformed
@@ -188,7 +197,20 @@ public class JanelaFuncionario extends java.awt.Dialog {
     private void btCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btCadastrarProdutoActionPerformed
+    private void verificarBotoes() {
+        if ((long) gerenciador.getSingleResultOfNamedQuery("Produto.getQuantidade") == 0) {
+            btBuscarProduto.setEnabled(false);
+            btRealizarVenda.setEnabled(false);
+        }
 
+        if ((long) gerenciador.getSingleResultOfNamedQuery("Vendas.quantidade") == 0) {
+            btBuscarVendas.setEnabled(false);
+        }
+        if ((long) gerenciador.getSingleResultOfNamedQuery("Material.getQuantidade") == 0
+                || (long) gerenciador.getSingleResultOfNamedQuery("Fornecedor.getQuantidade") == 0) {
+            btCadastrarProduto.setEnabled(false);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarCliente;
     private javax.swing.JButton btBuscarProduto;
@@ -199,6 +221,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
     private javax.swing.JButton btCadastrarMaterial;
     private javax.swing.JButton btCadastrarProduto;
     private javax.swing.JButton btRealizarVenda;
+    private javax.swing.JButton btSair;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -207,7 +230,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
     // End of variables declaration//GEN-END:variables
 
     private class TrataBotao implements ActionListener {
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btCadastrarClientes)) {
@@ -222,15 +245,19 @@ public class JanelaFuncionario extends java.awt.Dialog {
                 this.chamarNovoPainel(new PainelBuscarCliente());
             } else if (e.getSource().equals(btRealizarVenda)) {
                 new JanelaRealizarVenda(null, true).setVisible(true);
-            }else if (e.getSource().equals(btCadastrarProduto)){
+            } else if (e.getSource().equals(btCadastrarProduto)) {
                 this.chamarNovoPainel(new PanelCadastrarProduto());
-            }else if (e.getSource().equals(btBuscarProduto)){
+            } else if (e.getSource().equals(btBuscarProduto)) {
                 this.chamarNovoPainel(new PainelBuscarProduto());
-            }else if(e.getSource().equals(btBuscarVendas)){
+            } else if (e.getSource().equals(btBuscarVendas)) {
                 new JanelaBuscarVendas(null, true).setVisible(true);
+            } else if (e.getSource().equals(btSair)) {
+                setVisible(false);
+                dispose();
+                gerenciador.setFuncionario(null);
             }
         }
-            
+
         private void chamarNovoPainel(JPanel jPanel) {
             panelSecundario.removeAll();
             jPanel.setVisible(true);
@@ -238,7 +265,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
             panelSecundario.revalidate();
             panelSecundario.validate();
         }
-        
+
     }
-    
+
 }

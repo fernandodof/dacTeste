@@ -177,7 +177,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         comboBoxFornecedores.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         comboBoxFornecedores.setToolTipText("");
         painelFormulario.add(comboBoxFornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 480, -1));
-        painelFormulario.add(lbImagemProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 450, 340));
+        painelFormulario.add(lbImagemProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 470, 370));
 
         btEditarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btEditarProduto.setText("Editar");

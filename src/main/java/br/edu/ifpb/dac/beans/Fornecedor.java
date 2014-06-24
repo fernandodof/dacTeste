@@ -23,7 +23,8 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "seq_fornecedor", sequenceName = "sequencia_fornecedor", allocationSize = 1, initialValue = 1)
 @NamedQueries({
-    @NamedQuery(name="Fornecedor.findAll", query = "SELECT f FROM Fornecedor f")})
+    @NamedQuery(name= "Fornecedor.findAll", query = "SELECT f FROM Fornecedor f"),
+    @NamedQuery(name= "Fornecedor.getQuantidade", query = "SELECT count(f) FROM Fornecedor f")})
 public class Fornecedor implements Serializable {
     @Id
     @GeneratedValue(generator = "seq_fornecedor", strategy = GenerationType.SEQUENCE)
