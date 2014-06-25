@@ -97,6 +97,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         comboBoxFornecedores = new javax.swing.JComboBox();
         lbImagemProduto = new javax.swing.JLabel();
         btEditarProduto = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         fieldCodigo = new javax.swing.JTextField();
         btBuscarProdito = new javax.swing.JButton();
@@ -188,6 +189,10 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         });
         painelFormulario.add(btEditarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Marca:");
+        painelFormulario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+
         jPanel1.add(painelFormulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 587, 720));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -277,6 +282,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
     private javax.swing.JTextField fieldQuantidade;
     private javax.swing.JFormattedTextField fieldTamanho;
     private javax.swing.JTextField fieldValor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

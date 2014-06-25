@@ -98,6 +98,7 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
         jLabel2 = new javax.swing.JLabel();
         fieldData = new javax.swing.JFormattedTextField();
         btBuscarPorData = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -201,7 +202,7 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Buscar vendas por data:");
         jLabel2.setToolTipText("");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         try {
             fieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -214,11 +215,14 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
                 fieldDataActionPerformed(evt);
             }
         });
-        jPanel1.add(fieldData, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 120, -1));
+        jPanel1.add(fieldData, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 120, -1));
 
         btBuscarPorData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btBuscarPorData.setText("Buscar");
-        jPanel1.add(btBuscarPorData, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, -1, -1));
+        jPanel1.add(btBuscarPorData, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, -1, -1));
+
+        jLabel3.setText("dd/MM/aaaa");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, -1, -1));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -283,6 +287,7 @@ public class JanelaBuscarVendas extends java.awt.Dialog {
     private javax.swing.JTextField fieldIdVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
