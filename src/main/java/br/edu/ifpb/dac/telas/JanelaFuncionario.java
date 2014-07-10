@@ -150,7 +150,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         jPanel2.add(btCadastrarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 210, -1));
 
         btBuscarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btBuscarProduto.setText("Buscar Editar Produto");
+        btBuscarProduto.setText("Buscar/Editar Produto");
         jPanel2.add(btBuscarProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 210, -1));
 
         btBuscarVendas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

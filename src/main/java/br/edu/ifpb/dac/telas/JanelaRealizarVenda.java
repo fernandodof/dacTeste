@@ -433,13 +433,18 @@ public class JanelaRealizarVenda extends java.awt.Dialog {
                     Map<String, String> parametros = new HashMap();
                     parametros.put("cpf", fieldCpf.getText());
                     Cliente cliente = (Cliente) gerenciador.getSingleResultOfNamedQuery("Cliente.findByCPF", parametros);
-                    lbNomeCliente.setText(cliente.getNome());
-                    painelMaior.remove(btBuscar);
-                    fieldCpf.setEditable(false);
-                    fieldCpf.setBackground(Color.lightGray);
-                    if(cliente.getSituacao() == Cliente.Situacao.Inadimplente){
+
+                    //painelMaior.remove(btBuscar);
+                    //fieldCpf.setEditable(false);
+                    //fieldCpf.setBackground(Color.lightGray);
+                    if (cliente.getSituacao().equals(cliente.getSituacao().Inativo)) {
+                        fieldCpf.setText(null);
+                        throw new ErroAconteceuException("O cliente "+cliente.getNome()+" apresenta situação inativa no sistema,\n por favor reative o cliente para poder realizar a venda");
+                    }
+                    if (cliente.getSituacao() == Cliente.Situacao.Inadimplente) {
                         lbClienteInadimplente.setText("Cliente em situação inadimplente");
                     }
+                    lbNomeCliente.setText(cliente.getNome());
                 } catch (ErroAconteceuException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (NoResultException ex) {

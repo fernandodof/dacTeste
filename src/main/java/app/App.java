@@ -28,17 +28,18 @@ public class App {
     public static void main(String[] args) {
         GenericoDAO genericoDAO = new GenericoDAOJPA();
         //Criando 1 funcionário
-        Funcionario funcionario1 = new Funcionario("fernando", EncriptarSenha.encriptar("123456"), "222.222.222-22", "Fernando", Pessoa.Sexo.Masculino);
-        Endereco endereco = new Endereco();
-        endereco.setRua("Dimas andriola");
-        endereco.setBairro("Jardim Oásis");
-        endereco.setCep("58900.000");
-        endereco.setCidade("Cajazeiras");
-        endereco.setNumero(25);
+//        Funcionario funcionario1 = new Funcionario("fernando", EncriptarSenha.encriptar("123456"), "222.222.222-22", "Fernando", Pessoa.Sexo.Masculino);
+//        Endereco endereco = new Endereco();
+//        endereco.setRua("Dimas andriola");
+//        endereco.setBairro("Jardim Oásis");
+//        endereco.setCep("58900.000");
+//        endereco.setCidade("Cajazeiras");
+//        endereco.setNumero(25);
 //        funcionario1.setEndereco(endereco);
-        genericoDAO.save(endereco);
-
-
+//        genericoDAO.save(endereco);
+        long id = 68;
+        Produto produto = (Produto) genericoDAO.getById(Produto.class,id);
+        genericoDAO.delete(produto);
         
 //        //Criando 2 clientes
 //        Cliente cliente1 = new Cliente("000.000.000-00", "Ricardo", "souzajob@gmail.com", Pessoa.Sexo.Masculino);

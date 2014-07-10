@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.NoResultException;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -56,6 +55,7 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
                 textFields.add((JTextField) component);
             }
         }
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(Cliente.Situacao.values()));
     }
 
     /**
@@ -200,7 +200,6 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
         jLabel4.setText("Situaçao:");
 
         cbSituacao.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Normal", "Inadimplente" }));
 
         javax.swing.GroupLayout painelFormularioLayout = new javax.swing.GroupLayout(painelFormulario);
         painelFormulario.setLayout(painelFormularioLayout);
@@ -370,7 +369,7 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
 
         lbRealizarVenda.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lbRealizarVenda.setForeground(new java.awt.Color(0, 0, 204));
-        lbRealizarVenda.setText("Buscar Clente");
+        lbRealizarVenda.setText("Buscar Cliente");
         add(lbRealizarVenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -454,8 +453,10 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
 
                     if (cliente.getSituacao().equals(Cliente.Situacao.Normal)) {
                         cbSituacao.setSelectedIndex(0);
-                    } else {
+                    } else if(cliente.getSituacao().equals(Cliente.Situacao.Inadimplente)){
                         cbSituacao.setSelectedIndex(1);
+                    }else if (cliente.getSituacao().equals(Cliente.Situacao.Inativo)){
+                        cbSituacao.setSelectedIndex(2);
                     }
                     
                     fieldRua.setText(cliente.getEndereco().getRua());
@@ -523,7 +524,8 @@ public class PainelBuscarCliente extends javax.swing.JPanel {
                     cliente.setNome(fieldNome.getText());
                     cliente.setEmail(fieldEmail.getText());
                     cliente.setCpf(fieldCpf.getText());
-                    cliente.setSituacao(Cliente.Situacao.Normal);
+                    
+                    cliente.setSituacao((Cliente.Situacao) cbSituacao.getSelectedItem());
 
                     //Verificando botão de rádio para o cliente
                     Pessoa.Sexo sexo;

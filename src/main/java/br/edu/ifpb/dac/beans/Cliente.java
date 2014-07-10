@@ -34,7 +34,8 @@ public class Cliente extends Pessoa implements Serializable {
 
     public enum Situacao {
         Normal,
-        Inadimplente
+        Inadimplente,
+        Inativo
     }
 
     public Cliente() {

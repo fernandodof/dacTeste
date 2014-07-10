@@ -57,6 +57,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         this.btBuscarProdito.addActionListener(tb);
         this.btEditarProduto.addActionListener(tb);
         this.btSalvar.addActionListener(tb);
+        this.btExcluir.addActionListener(tb);
         parent = (JDialog) this.getParent();
         components = Arrays.asList(painelFormulario.getComponents());
 
@@ -98,6 +99,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         lbImagemProduto = new javax.swing.JLabel();
         btEditarProduto = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btExcluir = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         fieldCodigo = new javax.swing.JTextField();
         btBuscarProdito = new javax.swing.JButton();
@@ -169,7 +171,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
                 btSalvarActionPerformed(evt);
             }
         });
-        painelFormulario.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 550, -1, -1));
+        painelFormulario.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 590, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Fornecedor:");
@@ -178,7 +180,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         comboBoxFornecedores.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         comboBoxFornecedores.setToolTipText("");
         painelFormulario.add(comboBoxFornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 480, -1));
-        painelFormulario.add(lbImagemProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 470, 370));
+        painelFormulario.add(lbImagemProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 470, 370));
 
         btEditarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btEditarProduto.setText("Editar");
@@ -192,6 +194,11 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Marca:");
         painelFormulario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+
+        btExcluir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btExcluir.setForeground(new java.awt.Color(255, 0, 0));
+        btExcluir.setText("Excluir Produto");
+        painelFormulario.add(btExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, -1, -1));
 
         jPanel1.add(painelFormulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 587, 720));
 
@@ -213,7 +220,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
 
         lbBuscarCliente.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lbBuscarCliente.setForeground(new java.awt.Color(0, 0, 204));
-        lbBuscarCliente.setText("Buscar Clente");
+        lbBuscarCliente.setText("Buscar Produto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -274,6 +281,7 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
     private javax.swing.JLabel Tamamnho3;
     private javax.swing.JButton btBuscarProdito;
     private javax.swing.JButton btEditarProduto;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox comboBoxFornecedores;
     private javax.swing.JTextField fieldCodigo;
@@ -401,6 +409,14 @@ public class PainelBuscarProduto extends javax.swing.JPanel {
                     JOptionPane jOptionPane = new JOptionPane("Erro ocorrido por favor verifique suas informações", JOptionPane.WARNING_MESSAGE);
                     parent = jOptionPane.createDialog("Erro");
                     parent.setVisible(true);
+                }
+            }else if (e.getSource().equals(btExcluir)){
+//                JOptionPane jOptionPane = new JOptionPane("Erro ocorrido por favor verifique suas informações", JOptionPane.OK_CANCEL_OPTION);
+//                parent = jOptionPane.createDialog("Comfirmação");
+//                if(jOptionPane.)
+                int resposta = JOptionPane.showConfirmDialog(parent, "Deseja realmente excluir o produto ?", "Confirmação", JOptionPane.OK_CANCEL_OPTION);
+                if(resposta == JOptionPane.OK_OPTION){
+                    gerenciador.delete(produto);
                 }
             }
         }
