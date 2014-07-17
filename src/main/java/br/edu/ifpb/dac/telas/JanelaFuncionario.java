@@ -69,6 +69,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         btBuscarProduto = new javax.swing.JButton();
         btBuscarVendas = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -81,13 +82,13 @@ public class JanelaFuncionario extends java.awt.Dialog {
 
         lbNomeFuncionario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lbNomeFuncionario.setText("Nome do Funcionário");
-        jPanel1.add(lbNomeFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 650, 30));
+        jPanel1.add(lbNomeFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 30));
 
         panelSecundario.setMinimumSize(new java.awt.Dimension(600, 750));
-        jPanel1.add(panelSecundario, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 620, 740));
+        jPanel1.add(panelSecundario, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 620, 740));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 10, 720));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 10, 740));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -157,12 +158,13 @@ public class JanelaFuncionario extends java.awt.Dialog {
         btBuscarVendas.setText("Buscar Vendas");
         jPanel2.add(btBuscarVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 210, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 290, 720));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 290, 720));
 
         btSair.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btSair.setForeground(new java.awt.Color(255, 0, 0));
         btSair.setText("Sair");
-        jPanel1.add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, -1, -1));
+        jPanel1.add(btSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -178,25 +180,25 @@ public class JanelaFuncionario extends java.awt.Dialog {
         gerenciador.setFuncionario(null);
     }//GEN-LAST:event_closeDialog
 
-    private void btCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarFuncionarioActionPerformed
+    private void btCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btCadastrarFuncionarioActionPerformed
-
-    private void btRealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRealizarVendaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btRealizarVendaActionPerformed
-
-    private void btBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btBuscarClienteActionPerformed
+    }//GEN-LAST:event_btCadastrarProdutoActionPerformed
 
     private void btCadastrarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarMaterialActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btCadastrarMaterialActionPerformed
 
-    private void btCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarProdutoActionPerformed
+    private void btBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btCadastrarProdutoActionPerformed
+    }//GEN-LAST:event_btBuscarClienteActionPerformed
+
+    private void btRealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRealizarVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btRealizarVendaActionPerformed
+
+    private void btCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCadastrarFuncionarioActionPerformed
     private void verificarBotoes() {
         if ((long) gerenciador.getSingleResultOfNamedQuery("Produto.getQuantidade") == 0) {
             btBuscarProduto.setEnabled(false);
@@ -224,6 +226,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
     private javax.swing.JButton btSair;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbNomeFuncionario;
     private javax.swing.JPanel panelSecundario;
