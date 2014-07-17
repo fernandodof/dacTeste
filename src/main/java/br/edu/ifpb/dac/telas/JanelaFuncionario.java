@@ -88,7 +88,7 @@ public class JanelaFuncionario extends java.awt.Dialog {
         jPanel1.add(panelSecundario, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 620, 740));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 10, 740));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 10, 720));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
